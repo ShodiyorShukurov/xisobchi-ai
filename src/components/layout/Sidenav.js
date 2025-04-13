@@ -1,0 +1,128 @@
+import { Menu } from "antd";
+import { NavLink, useLocation } from "react-router-dom";
+import logo from "../../assets/images/logo.png";
+import { data } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
+import { ADMIN_ROLE } from "../../utils/constants";
+
+function Sidenav({ color }) {
+  const { pathname } = useLocation();
+  const page = pathname.replace("/", "");
+  const { changeValue } = useMain();
+
+  return (
+    <>
+      <div className="brand">
+        <img src={logo} alt="" />
+        <span>{data[changeValue].title}</span>
+      </div>
+      <hr />
+      <Menu theme="light" mode="inline">
+        <Menu.Item key="1">
+          <NavLink to="/dashboard">
+            <span
+              className="icon"
+              style={{
+                background: page === "dashboard" ? color : "",
+              }}
+            >
+              <svg
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.484 23.484 0 0 0-3.609 3.056.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25.015 25.015 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+            <span className="label">{data[changeValue].paths.path_1}</span>
+          </NavLink>
+        </Menu.Item>
+
+        <Menu.Item key="2">
+          <NavLink to="/user-list">
+            <span
+              className="icon"
+              style={{
+                background: page === "user-list" ? color : "",
+              }}
+            >
+              <svg
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+              >
+                <path d="M8 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM3.156 11.763c.16-.629.44-1.21.813-1.72a2.5 2.5 0 0 0-2.725 1.377c-.136.287.102.58.418.58h1.449c.01-.077.025-.156.045-.237ZM12.847 11.763c.02.08.036.16.046.237h1.446c.316 0 .554-.293.417-.579a2.5 2.5 0 0 0-2.722-1.378c.374.51.653 1.09.813 1.72ZM14 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM3.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5 13c-.552 0-1.013-.455-.876-.99a4.002 4.002 0 0 1 7.753 0c.136.535-.324.99-.877.99H5Z" />
+              </svg>
+            </span>
+            <span className="label">{data[changeValue].paths.path_2}</span>
+          </NavLink>
+        </Menu.Item>
+
+        <Menu.Item key="3">
+          <NavLink to="/transaction-list">
+            <span
+              className="icon"
+              style={{
+                background: page === "transaction-list" ? color : "",
+              }}
+            >
+              <svg
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.47 2.22a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 1 1-1.06-1.06l.97-.97H5.75a.75.75 0 0 1 0-1.5h5.69l-.97-.97a.75.75 0 0 1 0-1.06Zm-4.94 6a.75.75 0 0 1 0 1.06l-.97.97h5.69a.75.75 0 0 1 0 1.5H4.56l.97.97a.75.75 0 1 1-1.06 1.06l-2.25-2.25a.75.75 0 0 1 0-1.06l2.25-2.25a.75.75 0 0 1 1.06 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+            <span className="label">{data[changeValue].paths.path_3}</span>
+          </NavLink>
+        </Menu.Item>
+
+
+
+        {/* {localStorage.getItem(ADMIN_ROLE) === "main_admin" ? (
+          <Menu.Item key="7">
+            <NavLink to="/admin-list">
+              <span
+                className="icon"
+                style={{
+                  background: page === "admin-list" ? color : "",
+                }}
+              >
+                <svg
+                  width={20}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="size-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+              <span className="label">{data[changeValue].paths.path_7}</span>
+            </NavLink>
+          </Menu.Item>
+        ) : (
+          ""
+        )} */}
+      </Menu>
+    </>
+  );
+}
+
+export default Sidenav;
