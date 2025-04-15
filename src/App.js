@@ -10,8 +10,8 @@ import LoginPage from "./components/layout/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import UsersListTable from "./pages/UserList/UsersListTable";
 import TransactionListTable from "./pages/TransactionList/TransactionListTable";
-import Admin from "./pages/AdminPage/Admin";
 import BotSettings from "./pages/BotSettings/BotSettings";
+import PartnerList from "./pages/PartnerList/PartnerList";
 // import { ADMIN_ROLE } from "./utils/constants";
 
 function App() {
@@ -30,6 +30,7 @@ function App() {
           <Route path="user-list" element={<UsersListTable />} />
           <Route path="transaction-list" element={<TransactionListTable />} />
           <Route path="bot-settings" element={<BotSettings />} />
+          <Route path="partner" element={<PartnerList />} />
           {/* {localStorage.getItem(ADMIN_ROLE) === "main_admin" ? (
             <Route path="admin-list" element={<Admin />} />
           ) : (

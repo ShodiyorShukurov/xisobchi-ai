@@ -4,7 +4,7 @@ import React from 'react';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
 
-const PriceModal = ({
+const PartnerModal = ({
   setEditData,
   isModalVisible,
   selectItem,
@@ -65,8 +65,8 @@ const PriceModal = ({
     >
       <Form form={form} layout="vertical" onFinish={handleEditPrice}>
         <Form.Item
-          name="title_uz"
-          label="Title Uz"
+          name="name"
+          label="Name"
           rules={[
             {
               required: true,
@@ -78,8 +78,8 @@ const PriceModal = ({
         </Form.Item>
 
         <Form.Item
-          name="title_ru"
-          label="Title Ru"
+          name="phone_number"
+          label="Phone Number"
           rules={[
             {
               required: true,
@@ -91,21 +91,8 @@ const PriceModal = ({
         </Form.Item>
 
         <Form.Item
-          name="title_en"
-          label="Title En"
-          rules={[
-            {
-              required: true,
-              message: data[changeValue].bot_settings.price_required,
-            },
-          ]}
-        >
-          <Input style={{ width: '100%' }} />
-        </Form.Item>
-
-        <Form.Item
-          name="price"
-          label={data[changeValue].bot_settings.price_label}
+          name="discount"
+          label="Discount"
           rules={[
             {
               required: true,
@@ -117,8 +104,8 @@ const PriceModal = ({
         </Form.Item>
 
         <Form.Item
-          name="period"
-          label="Period"
+          name="additional"
+          label="Additional"
           rules={[
             {
               required: true,
@@ -130,8 +117,8 @@ const PriceModal = ({
         </Form.Item>
 
         <Form.Item
-          name="sort_order"
-          label="sort Order"
+          name="profit"
+          label="Profit"
           rules={[
             {
               required: true,
@@ -152,4 +139,4 @@ const PriceModal = ({
   );
 };
 
-export default PriceModal;
+export default PartnerModal;

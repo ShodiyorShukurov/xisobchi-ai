@@ -21,11 +21,20 @@ const MoreInfoModal = ({
         id: user.id,
         name: user.name,
         user_id: user.chat_id,
+        partner_id: user.partner_id,
         phone_number: user.phone_number,
-        // subscribe: user.subscribe,
+        premium: user.premium,
+        telegram_bot: user.telegram_bot,
+        bot_step: user.bot_step,
+        bot_lang: user.bot_lang,
         duration: user.duration,
+        source: user.source,
         expired: user.expired_date,
         source: user.source,
+        monthly_amount: user.monthly_amount,
+        limit_amount: user.limit_amount,
+        user_blocked: user.user_blocked,
+        used_free: user.used_free,
         userData: user,
       }))
     : [];
@@ -50,6 +59,12 @@ const MoreInfoModal = ({
       align: "center",
     },
     {
+      title: "Partner Id",
+      dataIndex: "partner_id",
+      key: "partner_id",
+      align: "center",
+    },
+    {
       title: data[changeValue].user_info.phone_number,
       dataIndex: "phone_number",
       key: "phone_number",
@@ -62,9 +77,9 @@ const MoreInfoModal = ({
         ),
     },
     {
-      title: data[changeValue].user_info.subscribe,
-      dataIndex: "subscribe",
-      key: "subscribe",
+      title: "Premium",
+      dataIndex: "premium",
+      key: "premium",
       align: "center",
       render: (subscribe) => (
         <span>
@@ -75,6 +90,33 @@ const MoreInfoModal = ({
           )}
         </span>
       ),
+    },
+    {
+      title: "Telegram Bot",
+      dataIndex: "telegram_bot",
+      key: "telegram_bot",
+      align: "center",
+      render: (telegram_bot) => (
+        <span>
+          {telegram_bot ? (
+            <span style={{ color: "green" }}>True</span>
+          ) : (
+            <span style={{ color: "red" }}>False</span>
+          )}
+        </span>
+      ),
+    },
+    {
+      title: "Bot Step",
+      dataIndex: "bot_step",
+      key: "bot_step",
+      align: "center",
+    },
+    {
+      title: "Bot Lang",
+      dataIndex: "bot_lang",
+      key: "bot_lang",
+      align: "center",
     },
 
     {
@@ -92,7 +134,18 @@ const MoreInfoModal = ({
         </span>
       ),
     },
-
+    {
+      title: "Monthly Amount",
+      dataIndex: "monthly_amount",
+      key: "monthly_amount",
+      align: "center",
+    },
+    {
+      title: "Limit Amount",
+      dataIndex: "limit_amount",
+      key: "limit_amount",
+      align: "center",
+    },
     {
       title: data[changeValue].user_info.expired,
       dataIndex: "expired",
@@ -124,6 +177,37 @@ const MoreInfoModal = ({
             <span style={{ color: "red " }}>
               {data[changeValue].user_info.source_error}
             </span>
+          )}
+        </span>
+      ),
+    },
+
+    {
+      title: "User Bloced",
+      dataIndex: "user_blocked",
+      key: "user_blocked",
+      align: "center",
+      render: (user_blocked) => (
+        <span>
+          {user_blocked ? (
+            <span style={{ color: "green" }}>True</span>
+          ) : (
+            <span style={{ color: "red" }}>False</span>
+          )}
+        </span>
+      ),
+    },
+    {
+      title: "User Free",
+      dataIndex: "used_free",
+      key: "used_free",
+      align: "center",
+      render: (used_free) => (
+        <span>
+          {used_free ? (
+            <span style={{ color: "green" }}>True</span>
+          ) : (
+            <span style={{ color: "red" }}>False</span>
           )}
         </span>
       ),

@@ -1,15 +1,12 @@
-import React from "react";
-import { Row, Col, Card, Button, Space, Input, message, Select } from "antd";
-import useUserList from "../../hooks/UseUserList";
-import Main from "../../components/layout/Main";
-import SendMessageUserModal from "./components/SendMessageUserModal";
-import UserData from "./data/UserData";
-import AddTransactionModal from "./components/AddTransactionModal";
-import MoreInfoModal from "./components/MoreInfoModal";
-import { data } from "../../mock/data";
-import { useMain } from "../../hooks/UseMain";
+import React from 'react';
+import { Row, Col, Card, Button, Space, Input, message, Select } from 'antd';
+import useUserList from '../../hooks/UseUserList';
+import Main from '../../components/layout/Main';
+import UserData from './data/UserData';
+import MoreInfoModal from './components/MoreInfoModal';
+import { data } from '../../mock/data';
+import { useMain } from '../../hooks/UseMain';
 
-const { Option } = Select;
 
 function UsersListTable() {
   const {
@@ -17,20 +14,14 @@ function UsersListTable() {
     next,
     setNext,
     fetchUserPhoneNumberData,
-    isModalVisible,
-    handleCancel,
     selectedUser,
     setSelectedUser,
     openMessageModal,
-    isTransactionModalVisible,
-    handleTransactionCancel,
     showTransactionModal,
     showUserInfoModal,
     isModalUserInfo,
     setIsModalUserInfo,
-    sourceData,
     isLoading,
-    fetchSortData,
   } = useUserList();
 
   const { changeValue } = useMain();
@@ -42,7 +33,7 @@ function UsersListTable() {
       message.warning(data[changeValue].users_list.must_number);
       return;
     }
-    const number = phoneNumber.startsWith("+")
+    const number = phoneNumber.startsWith('+')
       ? phoneNumber.slice(1)
       : phoneNumber;
     fetchUserPhoneNumberData(number);
@@ -60,10 +51,10 @@ function UsersListTable() {
             >
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingRight: "20px",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingRight: '20px',
                 }}
               >
                 <div>
@@ -73,42 +64,20 @@ function UsersListTable() {
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     onPressEnter={onSearch}
                     style={{
-                      marginBottom: "16px",
-                      width: "300px",
-                      marginLeft: "20px",
-                      marginTop: "20px",
+                      marginBottom: '16px',
+                      width: '300px',
+                      marginLeft: '20px',
+                      marginTop: '20px',
                     }}
                   />
                   <Button
                     onClick={onSearch}
                     type="primary"
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: '10px' }}
                   >
                     {data[changeValue].users_list.form_button_text}
                   </Button>
                 </div>
-
-                <Select
-                  placeholder={data[changeValue].users_list.option_placeholder}
-                  style={{ width: "300px" }}
-                  onChange={(value) => fetchSortData(value)}
-                >
-                  <Option key="all" value="all">
-                    All
-                  </Option>
-                  <Option key="subscribe" value="subscribe">
-                    {data[changeValue].users_list.option_1}
-                  </Option>
-                  <Option key="unsubscribe" value="unsubscribe">
-                    {data[changeValue].users_list.option_2}
-                  </Option>
-                  <Option key="duration" value="duration">
-                    {data[changeValue].users_list.option_3}
-                  </Option>
-                  <Option key="unduration" value="unduration">
-                    {data[changeValue].users_list.option_4}
-                  </Option>
-                </Select>
 
                 {/* <Button type="primary" onClick={() => openMessageModal()}>
                   {data[changeValue].users_list.button_text}
@@ -127,7 +96,7 @@ function UsersListTable() {
                   />
                 )}
               </div>
-              <Space style={{ padding: "10px" }}>
+              <Space style={{ padding: '10px' }}>
                 {next > 1 && (
                   <Button className="me-4" onClick={() => setNext(next - 1)}>
                     {data[changeValue].previous_button}
@@ -152,24 +121,6 @@ function UsersListTable() {
         <MoreInfoModal
           isModalUserInfo={isModalUserInfo}
           setIsModalUserInfo={setIsModalUserInfo}
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-        />
-
-        {/* User send message Modal */}
-        <SendMessageUserModal
-          isModalVisible={isModalVisible}
-          handleCancel={handleCancel}
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-          sourceData={sourceData}
-        />
-
-        {/*Transaction modal*/}
-
-        <AddTransactionModal
-          isTransactionModalVisible={isTransactionModalVisible}
-          handleTransactionCancel={handleTransactionCancel}
           selectedUser={selectedUser}
           setSelectedUser={setSelectedUser}
         />

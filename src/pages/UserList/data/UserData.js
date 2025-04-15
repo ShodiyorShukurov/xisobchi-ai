@@ -1,6 +1,6 @@
-import { Button, Table } from "antd";
-import { data } from "../../../mock/data";
-import { useMain } from "../../../hooks/UseMain";
+import { Button, Table } from 'antd';
+import { data } from '../../../mock/data';
+import { useMain } from '../../../hooks/UseMain';
 
 const UserData = ({
   // openMessageModal,
@@ -8,7 +8,7 @@ const UserData = ({
   showUserInfoModal,
   userListData,
 }) => {
-const { changeValue } = useMain();
+  const { changeValue } = useMain();
 
   const dataIndex =
     userListData?.length > 0
@@ -20,6 +20,8 @@ const { changeValue } = useMain();
           duration: user.duration,
           expired: user.expired_date,
           source: user.source,
+          monthly_amount: user.monthly_amount,
+          limit_amount: user.limit_amount,
           userData: user,
         }))
       : [];
@@ -27,55 +29,39 @@ const { changeValue } = useMain();
   const columns = [
     {
       title: data[changeValue].users_list.id,
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
       title: data[changeValue].users_list.name,
-      dataIndex: "name",
-      key: "name",
-      align: "center",
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
     },
     {
       title: data[changeValue].users_list.phone_number,
-      dataIndex: "phone_number",
-      key: "phone_number",
-      align: "center",
+      dataIndex: 'phone_number',
+      key: 'phone_number',
+      align: 'center',
       render: (phone_number) =>
         phone_number ? (
-          <a href={"tel:" + phone_number}>{phone_number}</a>
+          <a href={'tel:' + phone_number}>{phone_number}</a>
         ) : (
-          "N/A"
+          'N/A'
         ),
     },
-    // {
-    //   title: data[changeValue].users_list.subscribe,
-    //   dataIndex: "subscribe",
-    //   key: "subscribe",
-    //   align: "center",
-    //   render: (subscribe) => (
-    //     <span>
-    //       {subscribe ? (
-    //         <span style={{ color: "green" }}>True</span>
-    //       ) : (
-    //         <span style={{ color: "red" }}>False</span>
-    //       )}
-    //     </span>
-    //   ),
-    // },
-
     {
       title: data[changeValue].users_list.duration,
-      dataIndex: "duration",
-      key: "duration",
-      align: "center",
+      dataIndex: 'duration',
+      key: 'duration',
+      align: 'center',
       render: (duration) => (
         <span>
           {duration ? (
-            <span style={{ color: "green" }}>True</span>
+            <span style={{ color: 'green' }}>True</span>
           ) : (
-            <span style={{ color: "red" }}>False</span>
+            <span style={{ color: 'red' }}>False</span>
           )}
         </span>
       ),
@@ -83,15 +69,15 @@ const { changeValue } = useMain();
 
     {
       title: data[changeValue].users_list.expired,
-      dataIndex: "expired",
-      key: "expired",
-      align: "center",
+      dataIndex: 'expired',
+      key: 'expired',
+      align: 'center',
       render: (expired) => (
         <span>
           {expired !== null ? (
             expired
           ) : (
-            <span style={{ color: "red " }}>Not Found</span>
+            <span style={{ color: 'red ' }}>Not Found</span>
           )}
         </span>
       ),
@@ -99,31 +85,43 @@ const { changeValue } = useMain();
 
     {
       title: data[changeValue].users_list.source,
-      dataIndex: "source",
-      key: "source",
-      align: "center",
+      dataIndex: 'source',
+      key: 'source',
+      align: 'center',
       render: (source) => (
         <span>
           {source !== null ? (
-            <span style={{ textTransform: "capitalize" }}>{source}</span>
+            <span style={{ textTransform: 'capitalize' }}>{source}</span>
           ) : (
-            <span style={{ color: "red " }}>Not Found</span>
+            <span style={{ color: 'red ' }}>Not Found</span>
           )}
         </span>
       ),
     },
     {
+      title: 'Monthly Amount',
+      dataIndex: 'monthly_amount',
+      key: 'monthly_amount',
+      align: 'center',
+    },
+    {
+      title: 'Limit Amount',
+      dataIndex: 'limit_amount',
+      key: 'limit_amount',
+      align: 'center',
+    },
+    {
       title: data[changeValue].users_list.actions,
-      key: "actions",
+      key: 'actions',
       render: (_, record) => (
         <div>
           <Button
             type="link"
             onClick={() => showUserInfoModal(record.userData)}
-            style={{ paddingLeft: "10px", paddingRight: "10px" }}
+            style={{ paddingLeft: '10px', paddingRight: '10px' }}
           >
             <svg
-            width={20}
+              width={20}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
@@ -172,7 +170,7 @@ const { changeValue } = useMain();
           </Button> */}
         </div>
       ),
-      align: "center",
+      align: 'center',
     },
   ];
 
