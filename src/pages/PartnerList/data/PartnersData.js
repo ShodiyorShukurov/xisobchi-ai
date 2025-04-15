@@ -2,21 +2,26 @@ import { Button, Table } from 'antd';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
 
-const PriceData = ({ data: priceData, showModal, handleDeleteModal }) => {
+const PartnersData = ({
+  data: partnersData,
+  showModal,
+  handleDeleteModal,
+  showMoreInfo,
+}) => {
   const { changeValue } = useMain();
 
   const dataIndex =
-    priceData?.length > 0
-      ? priceData.map((price, index) => ({
+    partnersData?.length > 0
+      ? partnersData.map((partner, index) => ({
           id: index + 1,
-          title_uz: price.title_uz,
-          title_eng: price.title_eng,
-          title_ru: price.title_ru,
-          price: price.price,
-          period: price.period,
-          sort_order: price.sort_order,
-          priceId: price.id,
-          data: price,
+          name: partner.name,
+          phone_number: partner.phone_number,
+          profit: partner.profit,
+          additional: partner.additional,
+          balance: partner.balance,
+          discount: partner.discount,
+          duration: partner.duration,
+          partner_id: partner.id,
         }))
       : [];
 
@@ -28,42 +33,60 @@ const PriceData = ({ data: priceData, showModal, handleDeleteModal }) => {
       align: 'center',
     },
     {
-      title: 'Title uz',
-      dataIndex: 'title_uz',
-      key: 'title_uz',
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
       align: 'center',
     },
     {
-      title: 'Title eng',
-      dataIndex: 'title_eng',
-      key: 'title_ru',
+      title: 'Phone number',
+      dataIndex: 'phone_number',
+      key: 'phone_number',
+      align: 'center',
+      render: (phone_number) => (
+        <a href={`tel:${phone_number}`}>{phone_number}</a>
+      ),
+    },
+    {
+      title: 'Profit',
+      dataIndex: 'profit',
+      key: 'profit',
       align: 'center',
     },
     {
-      title: 'Title ru',
-      dataIndex: 'title_ru',
-      key: 'title_ru',
+      title: 'Balance',
+      dataIndex: 'balance',
+      key: 'balance',
+      align: 'center',
+      render: (balance) =>
+        `${Number(balance).toFixed(2)} ${data[changeValue].sum}`,
+    },
+    {
+      title: 'Additional',
+      dataIndex: 'additional',
+      key: 'additional',
       align: 'center',
     },
     {
-      title: data[changeValue].bot_settings.price,
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      render: (price) =>
-        `${Number(price).toFixed(2)} ${data[changeValue].sum}`,
-    },
-    {
-      title: 'Period',
-      dataIndex: 'period',
-      key: 'period',
+      title: 'Discount',
+      dataIndex: 'discount',
+      key: 'discount',
       align: 'center',
     },
     {
-      title: 'Sort Order',
-      dataIndex: 'sort_order',
-      key: 'sort_order',
+      title: 'Duration',
+      dataIndex: 'duration',
+      key: 'duration',
       align: 'center',
+      render: (duration) => (
+        <span>
+          {duration ? (
+            <span style={{ color: 'green' }}>True</span>
+          ) : (
+            <span style={{ color: 'red' }}>False</span>
+          )}
+        </span>
+      ),
     },
     {
       title: data[changeValue].bot_settings.actions,
@@ -101,6 +124,27 @@ const PriceData = ({ data: priceData, showModal, handleDeleteModal }) => {
               />
             </svg>
           </Button>
+
+          <Button
+            type="link"
+            onClick={() => showMoreInfo(record.partner_id)}
+            style={{ paddingLeft: '10px', paddingRight: '10px' }}
+          >
+            <svg
+              width={20}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="size-4"
+            >
+              <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+              <path
+                fillRule="evenodd"
+                d="M1.38 8.28a.87.87 0 0 1 0-.566 7.003 7.003 0 0 1 13.238.006.87.87 0 0 1 0 .566A7.003 7.003 0 0 1 1.379 8.28ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Button>
         </div>
       ),
       align: 'center',
@@ -117,4 +161,4 @@ const PriceData = ({ data: priceData, showModal, handleDeleteModal }) => {
   );
 };
 
-export default PriceData;
+export default PartnersData;

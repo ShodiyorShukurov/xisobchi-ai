@@ -1,8 +1,9 @@
-import { Button, Form, Input, InputNumber, message, Modal } from 'antd';
+import { Button, Form, Input, InputNumber, message, Modal, Select } from 'antd';
 import Api from '../../../api';
 import React from 'react';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
+import InputMask from 'react-input-mask';
 
 const PartnerModal = ({
   setEditData,
@@ -12,39 +13,39 @@ const PartnerModal = ({
 }) => {
   const { changeValue } = useMain();
   const [form] = Form.useForm();
+  const [value, setValue] = React.useState('');
 
   React.useEffect(() => {
     if (isModalVisible && selectItem) {
       form.setFieldsValue({
-        price: selectItem.price || '',
-        title_uz: selectItem.title_uz || '',
-        title_ru: selectItem.title_ru || '',
-        title_en: selectItem.title_eng || '',
-        period: selectItem.period || '',
-        sort_order: selectItem.sort_order || '',
+        name: selectItem.name || '',
+        phone_number: selectItem.phone_number || '',
+        discount: selectItem.discount || '',
+        additional: selectItem.additional || '',
+        profit: selectItem.profit || '',
       });
     }
   }, [isModalVisible, selectItem, form]);
 
-  const handleEditPrice = async (values) => {
+  const handleEditPratner = async (values) => {
     setEditData(true);
     const data = {
-      price: Math.round(values.price),
-      title_uz: values.title_uz,
-      title_ru: values.title_ru,
-      title_eng: values.title_en,
-      period: values.period,
-      sort_order: values.sort_order,
+      name: values.name,
+      phone_number: values.phone_number,
+      discount: values.discount,
+      additional: values.additional,
+      profit: values.profit,
+      duration: values.duration,
     };
 
     try {
       if (selectItem.id) {
         data.id = selectItem.id;
-        await Api.put('/price', data);
-        message.success("done");
+        await Api.put('/partners', data);
+        message.success('done');
       } else {
-        await Api.post('/price', data);
-        message.success("done");
+        await Api.post('/partners', data);
+        message.success('done');
       }
       handleCancel();
       form.resetFields();
@@ -58,12 +59,12 @@ const PartnerModal = ({
 
   return (
     <Modal
-      title={data[changeValue].bot_settings.price_title}
+      title="Add Partner"
       open={isModalVisible}
       onCancel={handleCancel}
       footer={null}
     >
-      <Form form={form} layout="vertical" onFinish={handleEditPrice}>
+      <Form form={form} layout="vertical" onFinish={handleEditPratner}>
         <Form.Item
           name="name"
           label="Name"
@@ -87,7 +88,40 @@ const PartnerModal = ({
             },
           ]}
         >
-          <Input style={{ width: '100%' }} />
+          <InputMask
+            mask="+998 99 999 99 99"
+            maskChar={null}
+            value={value?.startsWith('+998') ? value : '+998 '}
+            onChange={(e) => {
+              let newValue = e.target.value;
+              if (!newValue.startsWith('+998')) {
+                newValue = '+998 ';
+              }
+              setValue(newValue);
+            }}
+          >
+            {(inputProps) => <Input {...inputProps} />}
+          </InputMask>
+        </Form.Item>
+
+        <Form.Item
+          name="duration"
+          label="Duration"
+          rules={[
+            {
+              required: true,
+              message: data[changeValue].bot_settings.price_required,
+            },
+          ]}
+        >
+          <Select
+            defaultValue={selectItem?.duration ? true : selectItem?.duration}
+            style={{ width: '100%' }}
+            options={[
+              { value: true, label: 'True' },
+              { value: false, label: 'False' },
+            ]}
+          />
         </Form.Item>
 
         <Form.Item
@@ -131,7 +165,7 @@ const PartnerModal = ({
 
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
-            {data[changeValue].bot_settings.price_button}
+            Add Partner
           </Button>
         </Form.Item>
       </Form>

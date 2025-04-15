@@ -1,12 +1,13 @@
 import React from 'react';
 import { Row, Col, Card, Button } from 'antd';
 import Main from '../../components/layout/Main';
-import usePrice from '../../hooks/UsePrice';
-import PriceData from './data/PriceData';
+import PartnersData from './data/PartnersData';
 import PartnerModal from './components/PartnerModal';
 import { data as mockData } from '../../mock/data';
 import { useMain } from '../../hooks/UseMain';
 import PriceDeleteModal from './components/PriceDeleteModal';
+import usePartner from '../../hooks/UsePartner';
+import MoreInfoModal from './components/MoreInfoModal';
 
 function PartnerList() {
   const {
@@ -21,8 +22,12 @@ function PartnerList() {
     handleDelete,
     openDeleteModal,
     handleDeleteModal,
-    setOpenDeleteModal
-  } = usePrice();
+    setOpenDeleteModal,
+    showMoreInfo,
+    moreInfoId,
+    moreInfoModal,
+    setMoreInfoModal,
+  } = usePartner();
 
   const { changeValue } = useMain();
 
@@ -38,7 +43,7 @@ function PartnerList() {
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title={mockData[changeValue].bot_settings.price_table}
+              title="Partners List"
             >
               <Button
                 style={{
@@ -52,10 +57,15 @@ function PartnerList() {
                 className="mx-2"
                 onClick={() => setIsModalVisible(true)}
               >
-                Price Add
+                Add partners
               </Button>
               <div className="table-responsive">
-                <PriceData data={data} showModal={showModal} handleDeleteModal={handleDeleteModal} />
+                <PartnersData
+                  data={data}
+                  showModal={showModal}
+                  handleDeleteModal={handleDeleteModal}
+                  showMoreInfo={showMoreInfo}
+                />
               </div>
             </Card>
           </Col>
@@ -74,6 +84,11 @@ function PartnerList() {
           setOpenDeleteModal={setOpenDeleteModal}
         />
 
+        <MoreInfoModal
+          moreInfoId={moreInfoId}
+          moreInfoModal={moreInfoModal}
+          setMoreInfoModal={setMoreInfoModal}
+        />
       </div>
     </Main>
   );
