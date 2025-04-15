@@ -98,7 +98,7 @@ const {changeValue, setChangeValue} = useMain()
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
-              <NavLink to="/dashboard">{ data[changeValue].header.pages}</NavLink>
+              <NavLink to="/dashboard">{ data[changeValue]?.header?.pages}</NavLink>
             </Breadcrumb.Item>
             <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
               {name.replace("-", " ")}

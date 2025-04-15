@@ -12,14 +12,14 @@ function EChartUser() {
   const eChart = {
     series: [
       {
-        name: data[changeValue].dashboard.users_statistics_month,
+        name: data[changeValue]?.dashboard?.users_statistics_month,
         data: userStatisticsMonth
           ? userStatisticsMonth.map((total) => Number(total.user_count))
           : [],
         color: "#fff",
       },
       {
-        name: data[changeValue].dashboard.payed_users_statistics_month,
+        name: data[changeValue]?.dashboard?.payed_users_statistics_month,
         data: monthStatistics
           ? monthStatistics.map((total) => Number(total.user_count))
           : [],

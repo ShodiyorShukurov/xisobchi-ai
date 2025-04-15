@@ -6,7 +6,6 @@ import { useMain } from '../../../hooks/UseMain';
 
 const MoreInfoModal = ({ moreInfoModal, setMoreInfoModal, moreInfoId }) => {
   const { changeValue } = useMain();
-  console.log(moreInfoId);
   /*User data start*/
   const [partnerData, setPartnerData] = React.useState([]);
 
@@ -102,7 +101,7 @@ const MoreInfoModal = ({ moreInfoModal, setMoreInfoModal, moreInfoId }) => {
     try {
       const res = await Api.get('/partners/' + moreInfoId);
       if (res.data) {
-        setPartnerData([res.data.data]);
+        setPartnerData(res.data.data);
       } else {
         setPartnerData([]);
       }

@@ -83,27 +83,27 @@ function Home() {
 
   const count = [
     {
-      today: data[changeValue].dashboard.channel_members,
+      today: data[changeValue]?.dashboard?.channel_members,
       title: userStatistics?.bot_members,
       icon: profile,
       bnb: "bnb2",
     },
     {
-      today: data[changeValue].dashboard.payed_users,
+      today: data[changeValue]?.dashboard?.payed_users,
       title: userStatistics?.payed_user,
       icon: profile,
       bnb: "bnb2",
     },
     {
-      today: data[changeValue].dashboard.bot_users,
+      today: data[changeValue]?.dashboard?.bot_users,
       title: userStatistics?.all_user,
       icon: profile,
       bnb: "bnb2",
     },
     {
       today:
-        data[changeValue].dashboard.sales +
-        ` (${data[changeValue].sum})`,
+        data[changeValue]?.dashboard?.sales +
+        ` (${data[changeValue]?.sum})`,
       title: formatAmount(totalAmount?.sum),
       // persent: "+30%",
       icon: dollor,
@@ -112,7 +112,7 @@ function Home() {
   ];
 
   if (isLoading) {
-    return <Main>{data[changeValue].loading}</Main>;
+    return <Main>{data[changeValue]?.loading}</Main>;
   }
 
   return (

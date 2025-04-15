@@ -75,11 +75,11 @@ function EChartTransaction() {
           formatter: function (val, { dataPointIndex }) {
             const monthData = monthStatistics[dataPointIndex];
             return `
-              ${data[changeValue].dashboard.total_transactions_month}: ${val} ${
+              ${data[changeValue]?.dashboard?.total_transactions_month}: ${val} ${
               data[changeValue].sum
             } <br/>
                ${
-                 data[changeValue].dashboard.total_transactions_month_percentage
+                 data[changeValue]?.dashboard?.total_transactions_month_percentage
                }: ${
               monthData.percentage_increase
                 ? monthData.percentage_increase + " %"

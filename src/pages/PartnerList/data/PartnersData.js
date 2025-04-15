@@ -22,6 +22,7 @@ const PartnersData = ({
           discount: partner.discount,
           duration: partner.duration,
           partner_id: partner.id,
+          partner: partner
         }))
       : [];
 
@@ -94,7 +95,7 @@ const PartnersData = ({
       key: 'action',
       render: (_, record) => (
         <div>
-          <Button type="link" onClick={() => showModal(record.data)}>
+          <Button type="link" onClick={() => showModal(record.partner)}>
             <svg
               width={16}
               xmlns="http://www.w3.org/2000/svg"
