@@ -109,7 +109,7 @@ function Sidenav({ color }) {
                 />
               </svg>
             </span>
-            <span className="label">{data[changeValue]?.paths?.path_4}</span>
+            <span className="label">Tariflar</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="5">
@@ -121,7 +121,7 @@ function Sidenav({ color }) {
               }}
             >
               <svg
-              width={20}
+                width={20}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
@@ -135,6 +135,31 @@ function Sidenav({ color }) {
               </svg>
             </span>
             <span className="label">Hamkorlar</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="6">
+          <NavLink to="/category-list">
+            <span
+              className="icon"
+              style={{
+                background: page === 'category-list' ? color : '',
+              }}
+            >
+              <svg
+                width={20}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="size-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.5 2A2.5 2.5 0 0 0 2 4.5v2.879a2.5 2.5 0 0 0 .732 1.767l4.5 4.5a2.5 2.5 0 0 0 3.536 0l2.878-2.878a2.5 2.5 0 0 0 0-3.536l-4.5-4.5A2.5 2.5 0 0 0 7.38 2H4.5ZM5 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
+            <span className="label">Kategoriyalar</span>
           </NavLink>
         </Menu.Item>
 
