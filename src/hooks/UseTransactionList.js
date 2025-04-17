@@ -9,7 +9,7 @@ const useTransactionList = () => {
   const [isModalUserInfo, setIsModalUserInfo] = React.useState(false);
   const [selectedUser, setSelectedUser] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [method, setMethod] = React.useState(""); // New state for method
+  const [method, setMethod] = React.useState("");
 
   const showUserInfoModal = (record) => {
     setSelectedUser(record);
