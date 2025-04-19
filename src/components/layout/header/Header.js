@@ -1,21 +1,13 @@
-import { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Breadcrumb,
-  Button,
-  Drawer,
-  Typography,
-} from "antd";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import './header.css'
-import uzb from '../../../assets/images/uzb-flag.png'
-import rus from '../../../assets/images/rus-flag.png'
-import eng from "../../../assets/images/eng-flag.png"
-import { useMain } from "../../../hooks/UseMain";
-import { data } from "../../../mock/data";
-
+import { useState, useEffect } from 'react';
+import { Row, Col, Breadcrumb, Button, Drawer, Typography } from 'antd';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import './header.css';
+import uzb from '../../../assets/images/uzb-flag.png';
+import rus from '../../../assets/images/rus-flag.png';
+import eng from '../../../assets/images/eng-flag.png';
+import { useMain } from '../../../hooks/UseMain';
+import { data } from '../../../mock/data';
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -37,7 +29,6 @@ const ButtonContainer = styled.div`
     background-color: #1890ff;
   }
 `;
-
 
 const toggler = [
   <svg
@@ -77,12 +68,12 @@ function Header({
   handleSidenavColor,
   handleSidenavType,
 }) {
-const {changeValue, setChangeValue} = useMain()
+  const { changeValue, setChangeValue } = useMain();
 
   const { Title, Text } = Typography;
 
   const [visible, setVisible] = useState(false);
-  const [sidenavType, setSidenavType] = useState("transparent");
+  const [sidenavType, setSidenavType] = useState('transparent');
 
   useEffect(() => window.scrollTo(0, 0));
 
@@ -98,18 +89,20 @@ const {changeValue, setChangeValue} = useMain()
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
-              <NavLink to="/dashboard">{ data[changeValue]?.header?.pages}</NavLink>
+              <NavLink to="/dashboard">
+                {data[changeValue]?.header?.pages}
+              </NavLink>
             </Breadcrumb.Item>
-            <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
-              {name.replace("-", " ")}
+            <Breadcrumb.Item style={{ textTransform: 'capitalize' }}>
+              {name.replace('-', ' ')}
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="ant-page-header-heading">
             <span
               className="ant-page-header-heading-title"
-              style={{ textTransform: "capitalize" }}
+              style={{ textTransform: 'capitalize' }}
             >
-              {subName.replace("-", " ")}
+              {subName.replace('-', ' ')}
             </span>
           </div>
         </Col>
@@ -145,32 +138,32 @@ const {changeValue, setChangeValue} = useMain()
                   <ButtonContainer>
                     <Button
                       type="primary"
-                      onClick={() => handleSidenavColor("#1890ff")}
+                      onClick={() => handleSidenavColor('#1890ff')}
                     >
                       1
                     </Button>
                     <Button
                       type="success"
-                      onClick={() => handleSidenavColor("#52c41a")}
+                      onClick={() => handleSidenavColor('#52c41a')}
                     >
                       1
                     </Button>
                     <Button
                       type="danger"
-                      onClick={() => handleSidenavColor("#d9363e")}
+                      onClick={() => handleSidenavColor('#d9363e')}
                     >
                       1
                     </Button>
                     <Button
                       type="yellow"
-                      onClick={() => handleSidenavColor("#fadb14")}
+                      onClick={() => handleSidenavColor('#fadb14')}
                     >
                       1
                     </Button>
 
                     <Button
                       type="black"
-                      onClick={() => handleSidenavColor("#111")}
+                      onClick={() => handleSidenavColor('#111')}
                     >
                       1
                     </Button>
@@ -182,19 +175,19 @@ const {changeValue, setChangeValue} = useMain()
                   <Text>Choose between 2 different sidenav types.</Text>
                   <ButtonContainer className="trans">
                     <Button
-                      type={sidenavType === "transparent" ? "primary" : "white"}
+                      type={sidenavType === 'transparent' ? 'primary' : 'white'}
                       onClick={() => {
-                        handleSidenavType("transparent");
-                        setSidenavType("transparent");
+                        handleSidenavType('transparent');
+                        setSidenavType('transparent');
                       }}
                     >
                       TRANSPARENT
                     </Button>
                     <Button
-                      type={sidenavType === "white" ? "primary" : "white"}
+                      type={sidenavType === 'white' ? 'primary' : 'white'}
                       onClick={() => {
-                        handleSidenavType("#fff");
-                        setSidenavType("white");
+                        handleSidenavType('#fff');
+                        setSidenavType('white');
                       }}
                     >
                       WHITE
@@ -205,23 +198,23 @@ const {changeValue, setChangeValue} = useMain()
                   <Title level={5}>Navbar Fixed </Title>
                   <div className="language-btns">
                     <button
-                      className={changeValue === "uzb" ? "lang" : ""}
-                      onClick={() => setChangeValue("uzb")}
+                      className={changeValue === 'uzb' ? 'lang' : ''}
+                      onClick={() => setChangeValue('uzb')}
                     >
                       <img src={uzb} alt="uzb" width={20} />
                       O&apos;zbekcha
                     </button>
                     <button
-                      className={changeValue === "rus" ? "lang" : ""}
-                      style={{ margin: "0 10px" }}
-                      onClick={() => setChangeValue("rus")}
+                      className={changeValue === 'rus' ? 'lang' : ''}
+                      style={{ margin: '0 10px' }}
+                      onClick={() => setChangeValue('rus')}
                     >
                       <img src={rus} alt="rus" width={20} />
                       Русский
                     </button>
                     <button
-                      className={changeValue === "eng" ? "lang" : ""}
-                      onClick={() => setChangeValue("eng")}
+                      className={changeValue === 'eng' ? 'lang' : ''}
+                      onClick={() => setChangeValue('eng')}
                     >
                       <img src={eng} alt="eng" width={20} />
                       English
