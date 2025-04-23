@@ -31,7 +31,7 @@ const PartnerModal = ({
     setEditData(true);
     const data = {
       name: values.name,
-      phone_number: values.phone_number,
+      phone_number: values.phone_number.split(' ').join(''),
       discount: values.discount,
       additional: values.additional,
       profit: values.profit,

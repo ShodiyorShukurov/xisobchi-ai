@@ -51,10 +51,11 @@ const usePartner = () => {
 
   const handleDelete = async () => {
     setEditData(true);
-    console.log(deleteId);
+
     const data = {
       id: deleteId,
     };
+    console.log(data)
     try {
       await Api.delete(`/partners`, { data });
       setOpenDeleteModal(false);

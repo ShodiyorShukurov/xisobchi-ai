@@ -110,7 +110,7 @@ const PartnersData = ({
             </svg>
           </Button>
 
-          <Button type="link" onClick={() => handleDeleteModal(record.priceId)}>
+          <Button type="link" onClick={() => handleDeleteModal(record.partner_id)}>
             <svg
               width={16}
               xmlns="http://www.w3.org/2000/svg"
