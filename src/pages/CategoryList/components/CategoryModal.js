@@ -22,7 +22,7 @@ console.log(selectItem)
         name_ru: selectItem.name_ru || '',
         name_en: selectItem.name_en || '',
         emoji: selectItem.emoji || '',
-        // primary: selectItem.primary || '',
+        primary: selectItem.primary || '',  
       });
     }
   }, [isModalVisible, selectItem, form]);
@@ -32,7 +32,7 @@ console.log(selectItem)
     const data = {
       name_uz: values.name_uz,
       name_ru: values.name_ru,
-      name_en: values.name_ru,
+      name_en: values.name_en,
       emoji: values.emoji,
       primary: values.primary,
     };
@@ -127,7 +127,7 @@ console.log(selectItem)
           ]}
         >
           <Select
-            defaultValue={selectItem?.primary ? true : selectItem?.primary}
+            // defaultValue={selectItem?.primary ? true : selectItem?.primary}
             placeholder="Select value"
             style={{ width: '100%' }}
             options={[
