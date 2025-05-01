@@ -18,6 +18,8 @@ const CategoryData = ({
           name_ru: category.name_ru,
           name_en: category.name_en,
           primary: category.primary,
+          from_ai: category.from_ai,
+          created_at: category?.create_at?.slice(0, 10).split('-').reverse().join('.'),
           emoji: category.emoji,
           category_id: category.id,
           category: category,
@@ -69,6 +71,27 @@ const CategoryData = ({
           )}
         </span>
       ),
+    },
+    {
+      title: 'From Ai',
+      dataIndex: 'from_ai',
+      key: 'from_ai',
+      align: 'center',
+      render: (from_ai) => (
+        <span>
+          {from_ai ? (
+            <span style={{ color: 'green' }}>True</span>
+          ) : (
+            <span style={{ color: 'red' }}>False</span>
+          )}
+        </span>
+      ),
+    },
+    {
+      title: 'Created At',
+      dataIndex: 'created_at',
+      key: 'created_at',
+      align: 'center',
     },
     {
       title: data[changeValue].bot_settings.actions,
