@@ -15,7 +15,7 @@ function EChartTransaction() {
         name: "",
         data: monthStatistics
           ? monthStatistics.map((data) =>
-              (Number(data.total_amount) / 100).toFixed(2)
+              (Number(data.total_amount)).toFixed(2)
             )
           : [],
         color: "#fff",

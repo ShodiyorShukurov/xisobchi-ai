@@ -71,7 +71,7 @@ function Home() {
 
 
   const formatAmount = (amount) => {
-    const sum = amount / 100;
+    const sum = amount;
     if (sum >= 1000000) {
       return (sum / 1000000).toFixed(3) + "m";
     } else if (sum >= 1000) {
