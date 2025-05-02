@@ -1,47 +1,37 @@
 import React from 'react';
-import { Row, Col, Card, Button, Space, Input, message, Select } from 'antd';
-import useUserList from '../../hooks/UseUserList';
+import {
+  Row,
+  Col,
+  Card,
+  Button,
+  Space,
+  InputNumber,
+} from 'antd';
 import Main from '../../components/layout/Main';
-import UserData from './data/UserData';
 import MoreInfoModal from './components/MoreInfoModal';
 import { data } from '../../mock/data';
 import { useMain } from '../../hooks/UseMain';
-import UserDelete from './components/UserDelete';
+import useReports from '../../hooks/UseReports';
+import ReportsData from './data/ReportsData';
 
-function UsersListTable() {
+function ReportsPage() {
   const {
-    userListData,
+    reportsListData,
     next,
     setNext,
-    fetchUserPhoneNumberData,
-    selectedUser,
-    setSelectedUser,
-    openMessageModal,
-    showTransactionModal,
-    showUserInfoModal,
-    isModalUserInfo,
-    setIsModalUserInfo,
+    fetchReportData,
+    selectedReport,
+    setIsModalReportInfo,
+    showReprortInfoModal,
+    isModalReportInfo,
     isLoading,
-    handleDelete,
-    deleteModalVisible,
-    setDeleteModalVisible,
-    userReset,
-  } = useUserList();
+    setSelectedReport,
+    fetchReportsListData,
+  } = useReports();
 
   const { changeValue } = useMain();
 
-  const [phoneNumber, setPhoneNumber] = React.useState();
-
-  const onSearch = () => {
-    if (!phoneNumber) {
-      message.warning(data[changeValue].users_list.must_number);
-      return;
-    }
-    const number = phoneNumber.startsWith('+')
-      ? phoneNumber.slice(1)
-      : phoneNumber;
-    fetchUserPhoneNumberData(number);
-  };
+  const [id, setId] = React.useState();
 
   return (
     <Main>
@@ -51,7 +41,7 @@ function UsersListTable() {
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title={data[changeValue].users_list.title}
+              title="Reports"
             >
               <div
                 style={{
@@ -62,11 +52,11 @@ function UsersListTable() {
                 }}
               >
                 <div>
-                  <Input
-                    placeholder={data[changeValue].users_list.input_placeholder}
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    onPressEnter={onSearch}
+                  <InputNumber
+                    placeholder="Search by id"
+                    value={id}
+                    onChange={(value) => setId(value)}
+                    onPressEnter={() => fetchReportData(id)}
                     style={{
                       marginBottom: '16px',
                       width: '300px',
@@ -75,29 +65,31 @@ function UsersListTable() {
                     }}
                   />
                   <Button
-                    onClick={onSearch}
+                    onClick={() => fetchReportData(id)}
                     type="primary"
+                    disabled={!id}
                     style={{ marginLeft: '10px' }}
                   >
                     {data[changeValue].users_list.form_button_text}
                   </Button>
-                </div>
 
-                {/* <Button type="primary" onClick={() => openMessageModal()}>
-                  {data[changeValue].users_list.button_text}
-                </Button> */}
+                  <Button
+                    onClick={() => {fetchReportsListData(); setId('');}}
+                    type="primary"
+                    style={{ marginLeft: '10px' }}
+                  >
+                    Reset
+                  </Button>
+                </div>
               </div>
 
               <div className="table-responsive">
                 {isLoading ? (
                   data[changeValue].loading
                 ) : (
-                  <UserData
-                    userListData={userListData}
-                    openMessageModal={openMessageModal}
-                    showTransactionModal={showTransactionModal}
-                    showUserInfoModal={showUserInfoModal}
-                    handleDelete={handleDelete}
+                  <ReportsData
+                    reportsListData={reportsListData}
+                    showReprortInfoModal={showReprortInfoModal}
                   />
                 )}
               </div>
@@ -108,7 +100,7 @@ function UsersListTable() {
                   </Button>
                 )}
 
-                {userListData?.length >= 50 ? (
+                {reportsListData?.length >= 50 ? (
                   <Button color="dark" onClick={() => setNext(next + 1)}>
                     {data[changeValue].next_button}
                   </Button>
@@ -124,20 +116,14 @@ function UsersListTable() {
 
         {/*More Info User*/}
         <MoreInfoModal
-          isModalUserInfo={isModalUserInfo}
-          setIsModalUserInfo={setIsModalUserInfo}
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-        />
-
-        <UserDelete
-          deleteModalVisible={deleteModalVisible}
-          userReset={userReset}
-          setDeleteModalVisible={setDeleteModalVisible}
+          isModalReportInfo={isModalReportInfo}
+          setIsModalReportInfo={setIsModalReportInfo}
+          selectedReport={selectedReport}
+          setSelectedReport={setSelectedReport}
         />
       </div>
     </Main>
   );
 }
 
-export default UsersListTable;
+export default ReportsPage;

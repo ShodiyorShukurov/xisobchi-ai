@@ -14,6 +14,8 @@ import BotSettings from "./pages/BotSettings/BotSettings";
 import PartnerList from "./pages/PartnerList/PartnerList";
 import CategoryList from "./pages/CategoryList/CategoryList";
 import Cards from "./pages/Cards/Cards";
+import ReportsPage from "./pages/Reports/ReportsPage";
+import DebtsPage from "./pages/Debts/DebtsPage";
 // import { ADMIN_ROLE } from "./utils/constants";
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
           <Route path="partner" element={<PartnerList />} />
           <Route path="category-list" element={<CategoryList />} />
           <Route path="card-list" element={<Cards />} />
+          <Route path="reports" element={<ReportsPage />} />
+          <Route path="debts" element={<DebtsPage />} />
           {/* {localStorage.getItem(ADMIN_ROLE) === "main_admin" ? (
             <Route path="admin-list" element={<Admin />} />
           ) : (

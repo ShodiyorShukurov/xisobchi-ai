@@ -1,6 +1,6 @@
-import React from "react";
-import Api from "../api";
-import { Form } from "antd";
+import React from 'react';
+import Api from '../api';
+import { Form } from 'antd';
 
 const useUserList = () => {
   const [userListData, setUserListData] = React.useState([]);
@@ -12,6 +12,8 @@ const useUserList = () => {
   const [selectedUser, setSelectedUser] = React.useState(null);
   const [isModalUserInfo, setIsModalUserInfo] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
+  const [id, setId] = React.useState(null);
 
   const [form] = Form.useForm();
 
@@ -47,7 +49,7 @@ const useUserList = () => {
       setUserListData(res.data.data);
     } catch (error) {
       console.error(error);
-      if (error.message === "Request failed with status code 404") {
+      if (error.message === 'Request failed with status code 404') {
         setUserListData([]);
       }
     } finally {
@@ -65,7 +67,7 @@ const useUserList = () => {
       setUserListData(res.data.data);
     } catch (error) {
       console.error(error);
-      if (error.message === "Request failed with status code 404") {
+      if (error.message === 'Request failed with status code 404') {
         setUserListData([]);
       }
     } finally {
@@ -79,9 +81,30 @@ const useUserList = () => {
       setSourceData(res.data.data);
     } catch (error) {
       console.error(error);
-      if (error.message === "Request failed with status code 404") {
+      if (error.message === 'Request failed with status code 404') {
         setSourceData([]);
       }
+    }
+  };
+
+  const handleDelete = (id) => {
+    setId(id);
+    console.log(id);
+    setDeleteModalVisible(true);
+  };
+
+  const userReset = async () => {
+    setIsLoading(true);
+    try {
+      const res = await Api.delete(`/users/reset/${id}`);
+      if (res.status === 200) {
+        setIsModalVisible(false);
+        fetchUserListData();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,6 +132,10 @@ const useUserList = () => {
     setIsModalUserInfo,
     sourceData,
     isLoading,
+    handleDelete,
+    deleteModalVisible,
+    setDeleteModalVisible,
+    userReset,
   };
 };
 
