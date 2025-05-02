@@ -89,16 +89,15 @@ const useUserList = () => {
 
   const handleDelete = (id) => {
     setId(id);
-    console.log(id);
     setDeleteModalVisible(true);
   };
 
   const userReset = async () => {
     setIsLoading(true);
     try {
-      const res = await Api.delete(`/users/reset/${id}`);
+      const res = await Api.delete(`/user/reset/${id}`);
       if (res.status === 200) {
-        setIsModalVisible(false);
+        setDeleteModalVisible(false);
         fetchUserListData();
       }
     } catch (error) {

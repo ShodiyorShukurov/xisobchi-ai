@@ -139,7 +139,7 @@ const UserData = ({
 
           <Button
             type="link"
-            onClick={() => handleDelete(record.userData.id)}
+            onClick={() => handleDelete(record.userData.chat_id)}
             style={{ paddingLeft: '10px', paddingRight: '10px' }}
           >
             <svg
