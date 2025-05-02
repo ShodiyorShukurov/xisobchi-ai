@@ -27,11 +27,11 @@ function ReportsPage() {
     isLoading,
     setSelectedReport,
     fetchReportsListData,
+    setId,
+    id
   } = useReports();
-
+console.log(id)
   const { changeValue } = useMain();
-
-  const [id, setId] = React.useState();
 
   return (
     <Main>
@@ -53,10 +53,10 @@ function ReportsPage() {
               >
                 <div>
                   <InputNumber
-                    placeholder="Search by id"
+                    placeholder="Search by user id"
                     value={id}
                     onChange={(value) => setId(value)}
-                    onPressEnter={() => fetchReportData(id)}
+                    onPressEnter={() => fetchReportData()}
                     style={{
                       marginBottom: '16px',
                       width: '300px',
@@ -65,7 +65,7 @@ function ReportsPage() {
                     }}
                   />
                   <Button
-                    onClick={() => fetchReportData(id)}
+                    onClick={() => fetchReportData()}
                     type="primary"
                     disabled={!id}
                     style={{ marginLeft: '10px' }}

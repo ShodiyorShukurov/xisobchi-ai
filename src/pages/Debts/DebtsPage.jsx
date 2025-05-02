@@ -20,11 +20,10 @@ function DebtsPage() {
     isModalDebtInfo,
     setSelectedDebt,
     setIsModalDebtInfo,
+    id, setId
   } = UseDebts();
 
   const { changeValue } = useMain();
-
-  const [id, setId] = React.useState();
 
   return (
     <Main>
@@ -46,7 +45,7 @@ function DebtsPage() {
               >
                 <div>
                   <InputNumber
-                    placeholder="Search by id"
+                    placeholder="Search by user id"
                     value={id}
                     onChange={(value) => setId(value)}
                     onPressEnter={() => fetchDebtData(id)}
@@ -68,7 +67,7 @@ function DebtsPage() {
 
                   <Button
                     onClick={() => {
-                        fetchDebtsListData();
+                      fetchDebtsListData();
                       setId('');
                     }}
                     type="primary"

@@ -136,6 +136,7 @@ const useUserList = () => {
     deleteModalVisible,
     setDeleteModalVisible,
     userReset,
+    fetchUserListData
   };
 };
 

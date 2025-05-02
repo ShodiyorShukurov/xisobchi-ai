@@ -7,6 +7,7 @@ const UseDebts = () => {
   const [selectedDebt, setSelectedDebt] = React.useState(null);
   const [isModalDebtInfo, setIsModalDebtInfo] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [id, setId] = React.useState();
 
   const showDebtInfoModal = (record) => {
     setSelectedDebt(record);
@@ -28,12 +29,12 @@ const UseDebts = () => {
     }
   };
 
-  const fetchDebtData = async (id) => {
+  const fetchDebtData = async () => {
     if (!id) return;
     setIsLoading(true);
     try {
-      const res = await Api.get(`/debt/${id}`);
-      setDebtsListData([res.data.data]);
+      const res = await Api.get(`/debts/list?limit=50&page=${next}&user_id=${id}`);
+      setDebtsListData(res.data.data);
     } catch (error) {
       console.error(error);
       if (error.message === 'Request failed with status code 404') {
@@ -45,8 +46,11 @@ const UseDebts = () => {
   };
 
   React.useEffect(() => {
-    fetchDebtsListData();
-    fetchDebtData();
+    if (id) {
+      fetchDebtData();
+    } else {
+      fetchDebtsListData();
+    }
   }, [next]);
 
   return {
@@ -61,6 +65,8 @@ const UseDebts = () => {
     isModalDebtInfo,
     setSelectedDebt,
     setIsModalDebtInfo,
+    id,
+    setId,
   };
 };
 

@@ -26,11 +26,12 @@ function UsersListTable() {
     deleteModalVisible,
     setDeleteModalVisible,
     userReset,
+    fetchUserListData,
   } = useUserList();
 
   const { changeValue } = useMain();
 
-  const [phoneNumber, setPhoneNumber] = React.useState();
+  const [phoneNumber, setPhoneNumber] = React.useState('');
 
   const onSearch = () => {
     if (!phoneNumber) {
@@ -81,11 +82,18 @@ function UsersListTable() {
                   >
                     {data[changeValue].users_list.form_button_text}
                   </Button>
-                </div>
 
-                {/* <Button type="primary" onClick={() => openMessageModal()}>
-                  {data[changeValue].users_list.button_text}
-                </Button> */}
+                  <Button
+                    style={{ marginLeft: '10px' }}
+                    onClick={() => {
+                      fetchUserListData();
+                      setPhoneNumber('');
+
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </div>
               </div>
 
               <div className="table-responsive">

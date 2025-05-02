@@ -8,7 +8,7 @@ const useReports = () => {
   const [selectedReport, setSelectedReport] = React.useState(null);
   const [isModalReportInfo, setIsModalReportInfo] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-
+  const [id, setId] = React.useState();
 
   const showReprortInfoModal = (record) => {
     setSelectedReport(record);
@@ -30,14 +30,14 @@ const useReports = () => {
     }
   };
 
-  const fetchReportData = async (id) => {
+  const fetchReportData = async () => {
     if (!id) return;
     setIsLoading(true);
     try {
       const res = await Api.get(
-        `/report/${id}`
+        `/reports/list?limit=50&page=${next}&user_id=${id}`
       );
-      setReportsListData([res.data.data]);
+      setReportsListData(res.data.data);
     } catch (error) {
       console.error(error);
       if (error.message === 'Request failed with status code 404') {
@@ -48,10 +48,12 @@ const useReports = () => {
     }
   };
 
-
   React.useEffect(() => {
-    fetchReportsListData();
-    fetchReportData();
+    if (id) {
+      fetchReportData();
+    } else {
+      fetchReportsListData();
+    }
   }, [next]);
 
   return {
@@ -65,7 +67,9 @@ const useReports = () => {
     isModalReportInfo,
     isLoading,
     setSelectedReport,
-    fetchReportsListData
+    fetchReportsListData,
+    setId,
+    id
   };
 };
 
