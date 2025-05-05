@@ -64,7 +64,9 @@ const PartnerModal = ({
       onCancel={handleCancel}
       footer={null}
     >
-      <Form form={form} layout="vertical" onFinish={handleEditPratner}>
+      <Form initialValues={{
+        duration: selectItem?.duration,
+      }} form={form} layout="vertical" onFinish={handleEditPratner}>
         <Form.Item
           name="name"
           label="Name"
@@ -115,7 +117,8 @@ const PartnerModal = ({
           ]}
         >
           <Select
-            defaultValue={selectItem?.duration ? true : selectItem?.duration}
+            // defaultValue={selectItem?.duration ? true : selectItem?.duration}
+            placeholder="Select duration"
             style={{ width: '100%' }}
             options={[
               { value: true, label: 'True' },
@@ -147,7 +150,7 @@ const PartnerModal = ({
             },
           ]}
         >
-          <InputNumber style={{ width: '100%' }} min={1} />
+          <InputNumber style={{ width: '100%' }} min={0} />
         </Form.Item>
 
         <Form.Item
@@ -160,7 +163,7 @@ const PartnerModal = ({
             },
           ]}
         >
-          <InputNumber style={{ width: '100%' }} min={1} />
+          <InputNumber style={{ width: '100%' }} min={0} />
         </Form.Item>
 
         <Form.Item>
