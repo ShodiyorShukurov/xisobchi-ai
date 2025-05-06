@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Row, Col, Card, Button, Space, Input, message, Select } from 'antd';
 import useUserList from '../../hooks/UseUserList';
 import Main from '../../components/layout/Main';
@@ -27,22 +27,32 @@ function UsersListTable() {
     setDeleteModalVisible,
     userReset,
     fetchUserListData,
+    fetchUserId
   } = useUserList();
 
   const { changeValue } = useMain();
 
   const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [userId, setUserId] = React.useState('');
 
   const onSearch = () => {
-    if (!phoneNumber) {
+    const cleanedPhone = phoneNumber?.replace(/^\+/, '');
+  
+    if (!phoneNumber && !userId) {
       message.warning(data[changeValue].users_list.must_number);
+      message.warning(data[changeValue].users_list.must_user_id);
       return;
     }
-    const number = phoneNumber.startsWith('+')
-      ? phoneNumber.slice(1)
-      : phoneNumber;
-    fetchUserPhoneNumberData(number);
+  
+    if (phoneNumber) {
+      fetchUserPhoneNumberData(cleanedPhone);
+    }
+  
+    if (userId) {
+      fetchUserId(userId);
+    }
   };
+  
 
   return (
     <Main>
@@ -75,6 +85,18 @@ function UsersListTable() {
                       marginTop: '20px',
                     }}
                   />
+                  <Input
+                    placeholder="User ID"
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)}
+                    onPressEnter={onSearch}
+                    style={{
+                      marginBottom: '16px',
+                      width: '300px',
+                      marginLeft: '20px',
+                      marginTop: '20px',
+                    }}
+                  />
                   <Button
                     onClick={onSearch}
                     type="primary"
@@ -88,7 +110,7 @@ function UsersListTable() {
                     onClick={() => {
                       fetchUserListData();
                       setPhoneNumber('');
-
+                      setUserId('');
                     }}
                   >
                     Reset

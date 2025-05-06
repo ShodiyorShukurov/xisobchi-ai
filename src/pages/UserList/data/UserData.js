@@ -18,6 +18,8 @@ const UserData = ({
           name: user.name,
           phone_number: user.phone_number,
           user_id: user.chat_id,
+          partner_id: user.partner_id,
+          partner_name: user.partner_name,
           // subscribe: user.subscribe,
           duration: user.duration,
           expired: user.expired_date,
@@ -44,6 +46,18 @@ const UserData = ({
       title: "User ID",
       dataIndex: 'user_id',
       key: 'user_id',
+      align: 'center',
+    },
+    {
+      title: "Partner ID",
+      dataIndex: 'partner_id',
+      key: 'partner_id',
+      align: 'center',
+    },
+    {
+      title: "Partner Name",
+      dataIndex: 'partner_name',
+      key: 'partner_name',
       align: 'center',
     },
     {

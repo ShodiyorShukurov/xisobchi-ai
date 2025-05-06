@@ -87,6 +87,24 @@ const useUserList = () => {
     }
   };
 
+  const fetchUserId = async (id) => {
+    if (!id) return;
+    setIsLoading(true);
+    try {
+      const res = await Api.get(
+        `/user/${id}`
+      );
+      setUserListData([res.data.data]);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Request failed with status code 404') {
+        setUserListData([]);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleDelete = (id) => {
     setId(id);
     setDeleteModalVisible(true);
@@ -111,6 +129,7 @@ const useUserList = () => {
     fetchUserListData();
     fetchSourceData();
     fetchUserPhoneNumberData();
+    fetchUserId()
   }, [next]);
 
   return {
@@ -135,7 +154,8 @@ const useUserList = () => {
     deleteModalVisible,
     setDeleteModalVisible,
     userReset,
-    fetchUserListData
+    fetchUserListData,
+    fetchUserId
   };
 };
 
