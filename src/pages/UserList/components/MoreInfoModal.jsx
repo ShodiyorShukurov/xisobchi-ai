@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Row, Col, Card, Table } from "antd";
+import { Modal, Button, Row, Col, Card, Table, message } from "antd";
 import Api from "../../../api";
 import { data } from "../../../mock/data";
 import { useMain } from "../../../hooks/UseMain";
@@ -10,14 +10,13 @@ const MoreInfoModal = ({
   selectedUser,
   setSelectedUser,
 }) => {
+  const { changeValue } = useMain();
 
-  const {changeValue} = useMain(); 
-
-  /*User data start*/
-  const [userData, setUserData] = React.useState([]);
+  /* User data start */
+  const [userData, setUserData] = useState([]);
 
   const userIndex = userData?.length
-    ? userData?.map((user) => ({
+    ? userData.map((user) => ({
         id: user.id,
         name: user.name,
         user_id: user.chat_id,
@@ -30,7 +29,6 @@ const MoreInfoModal = ({
         duration: user.duration,
         source: user.source,
         expired: user.expired_date,
-        source: user.source,
         monthly_amount: user.monthly_amount,
         limit_amount: user.limit_amount,
         user_blocked: user.user_blocked,
@@ -118,7 +116,6 @@ const MoreInfoModal = ({
       key: "bot_lang",
       align: "center",
     },
-
     {
       title: data[changeValue].user_info.duration,
       dataIndex: "duration",
@@ -156,14 +153,13 @@ const MoreInfoModal = ({
           {expired !== null ? (
             expired
           ) : (
-            <span style={{ color: "red " }}>
+            <span style={{ color: "red" }}>
               {data[changeValue].user_info.expired_error}
             </span>
           )}
         </span>
       ),
     },
-
     {
       title: data[changeValue].user_info.source,
       dataIndex: "source",
@@ -174,16 +170,15 @@ const MoreInfoModal = ({
           {source !== null ? (
             source
           ) : (
-            <span style={{ color: "red " }}>
+            <span style={{ color: "red" }}>
               {data[changeValue].user_info.source_error}
             </span>
           )}
         </span>
       ),
     },
-
     {
-      title: "User Bloced",
+      title: "User Blocked",
       dataIndex: "user_blocked",
       key: "user_blocked",
       align: "center",
@@ -222,18 +217,21 @@ const MoreInfoModal = ({
         setUserData([res.data.data]);
       } else {
         setUserData([]);
+        message.warning("No user data found");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching user data:", error);
+      message.error("Failed to fetch user data");
     }
   };
 
-  /*User data end*/
+  /* User data end */
 
-  /*User all transaction data start*/
+  /* User all transaction data start */
   const [userTransactionData, setUserTransactionData] = useState([]);
+
   const dataIndex = userTransactionData?.length
-    ? userTransactionData?.map((user) => ({
+    ? userTransactionData.map((user) => ({
         id: user.id,
         transaction_id: user.transaction_id,
         user_id: user.user_id,
@@ -300,7 +298,6 @@ const MoreInfoModal = ({
           </span>
         ),
     },
-
     {
       title: data[changeValue].transaction_info.ofd_url,
       dataIndex: "ofd_url",
@@ -308,13 +305,13 @@ const MoreInfoModal = ({
       align: "center",
       render: (_, record) =>
         record?.ofd_url ? (
-          <a href={record?.ofd_url} target="_blanck">
+          <a href={record?.ofd_url} target="_blank">
             <Button type="link">
               {data[changeValue].transaction_info.ofd_url_success}
             </Button>
           </a>
         ) : (
-          <span style={{ color: "red " }}>
+          <span style={{ color: "red" }}>
             {data[changeValue].transaction_info.ofd_url_error}
           </span>
         ),
@@ -330,23 +327,125 @@ const MoreInfoModal = ({
   const fetchUserTransactionData = async () => {
     if (!selectedUser?.chat_id) return;
     try {
-      const res = await Api.get(
-        `/transactions/user?user_id=${selectedUser?.chat_id}`
-      );
-      if (res.data.data.length > 0) {
+      const res = await Api.get(`/transactions/user?user_id=${selectedUser?.chat_id}`);
+      if (res?.data?.data?.length > 0) {
         setUserTransactionData(res.data.data);
       } else {
         setUserTransactionData([]);
+        message.warning("No transaction data found for this user");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching transaction data:", error);
+      if (error.response?.status === 404) {
+        message.error("Transaction endpoint not found");
+      } else {
+        message.error("Failed to fetch transaction data");
+      }
     }
   };
-  /*User all transaction data end*/
+
+  /* User all transaction data end */
+
+  /* User reports data start */
+  const [reportsData, setReportsData] = useState([]);
+
+  const reportsIndex = reportsData?.length
+    ? reportsData.map((report) => ({
+        id: report.id,
+        amount: report.amount,
+        date: report.date,
+        comment: report.comment,
+        category_name: report.category_name,
+        currency: report.currency,
+        income: report.income,
+        create_at: report.create_at,
+      }))
+    : [];
+
+  const reportColumns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      align: "center",
+    },
+    {
+      title: "Miqdor",
+      dataIndex: "amount",
+      key: "amount",
+      align: "center",
+      render: (amount) => `${Number(amount).toLocaleString()} so'm`,
+    },
+    {
+      title: "Sana",
+      dataIndex: "date",
+      key: "date",
+      align: "center",
+      render: (date) => new Date(date).toLocaleDateString(),
+    },
+    {
+      title: "Izoh",
+      dataIndex: "comment",
+      key: "comment",
+      align: "center",
+    },
+    {
+      title: "Kategoriya",
+      dataIndex: "category_name",
+      key: "category_name",
+      align: "center",
+    },
+    {
+      title: "Valyuta",
+      dataIndex: "currency",
+      key: "currency",
+      align: "center",
+    },
+    {
+      title: "Daromad",
+      dataIndex: "income",
+      key: "income",
+      align: "center",
+      render: (income) => (
+        <span style={{ color: income ? "green" : "red" }}>
+          {income ? "Daromad" : "Xarajat"}
+        </span>
+      ),
+    },
+    {
+      title: "Yaratilgan Sana",
+      dataIndex: "create_at",
+      key: "create_at",
+      align: "center",
+      render: (date) => new Date(date).toLocaleDateString(),
+    },
+  ];
+
+  const fetchUserRePortsData = async () => {
+    if (!selectedUser?.chat_id) return;
+    try {
+      const res = await Api.get(
+        `/reports/list?limit=10&page=1&user_id=${selectedUser?.chat_id}`
+      );
+      if (res.data.data.length > 0) {
+        setReportsData(res.data.data);
+      } else {
+        setReportsData([]);
+        message.warning("No report data found for this user");
+      }
+    } catch (error) {
+      console.error("Error fetching report data:", error);
+      message.error("Failed to fetch report data");
+    }
+  };
+  /* User reports data end */
 
   React.useEffect(() => {
-    fetchUserData();
-    fetchUserTransactionData();
+    if (selectedUser?.chat_id) {
+      fetchUserData();
+      fetchUserTransactionData();
+      fetchUserRePortsData();
+    }
   }, [selectedUser?.chat_id]);
 
   return (
@@ -358,13 +457,14 @@ const MoreInfoModal = ({
         setSelectedUser(null);
         setUserTransactionData([]);
         setUserData([]);
+        setReportsData([]);
       }}
       footer={null}
-      width={1200}
+      width={1000}
     >
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -372,6 +472,7 @@ const MoreInfoModal = ({
             >
               <div className="table-responsive">
                 <Table
+                  rowKey="id"
                   columns={userColumns}
                   dataSource={userIndex}
                   pagination={false}
@@ -384,7 +485,7 @@ const MoreInfoModal = ({
       </div>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -392,8 +493,30 @@ const MoreInfoModal = ({
             >
               <div className="table-responsive">
                 <Table
+                  rowKey="id"
                   columns={columns}
                   dataSource={dataIndex}
+                  pagination={false}
+                  className="ant-border-space"
+                />
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+      <div className="tabled">
+        <Row gutter={[24, 0]}>
+          <Col xs={24} xl={24}>
+            <Card
+              bordered={false}
+              className="criclebox tablespace mb-24"
+              title="Foydalanuvchi Xarajatlari"
+            >
+              <div className="table-responsive">
+                <Table
+                  rowKey="id"
+                  columns={reportColumns}
+                  dataSource={reportsIndex}
                   pagination={false}
                   className="ant-border-space"
                 />

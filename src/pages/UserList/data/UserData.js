@@ -17,12 +17,12 @@ const UserData = ({
           id: index + 1,
           name: user.name,
           phone_number: user.phone_number,
+          user_id: user.chat_id,
           // subscribe: user.subscribe,
           duration: user.duration,
           expired: user.expired_date,
           source: user.source,
           monthly_amount: user.monthly_amount,
-          limit_amount: user.limit_amount,
           userData: user,
         }))
       : [];
@@ -38,6 +38,12 @@ const UserData = ({
       title: data[changeValue].users_list.name,
       dataIndex: 'name',
       key: 'name',
+      align: 'center',
+    },
+    {
+      title: "User ID",
+      dataIndex: 'user_id',
+      key: 'user_id',
       align: 'center',
     },
     {
@@ -103,12 +109,6 @@ const UserData = ({
       title: 'Monthly Amount',
       dataIndex: 'monthly_amount',
       key: 'monthly_amount',
-      align: 'center',
-    },
-    {
-      title: 'Limit Amount',
-      dataIndex: 'limit_amount',
-      key: 'limit_amount',
       align: 'center',
     },
     {
