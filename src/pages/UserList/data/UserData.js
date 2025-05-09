@@ -1,15 +1,16 @@
+import React, { useRef, useEffect } from 'react';
 import { Button, Table } from 'antd';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
 
 const UserData = ({
-  // openMessageModal,
-  // showTransactionModal,
   showUserInfoModal,
   userListData,
   handleDelete,
 }) => {
   const { changeValue } = useMain();
+  const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
+  const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
 
   const dataIndex =
     userListData?.length > 0
@@ -20,7 +21,6 @@ const UserData = ({
           user_id: user.chat_id,
           partner_id: user.partner_id,
           partner_name: user.partner_name,
-          // subscribe: user.subscribe,
           duration: user.duration,
           expired: user.expired_date,
           source: user.source,
@@ -28,6 +28,19 @@ const UserData = ({
           userData: user,
         }))
       : [];
+
+  // Table scroll pozitsiyasini saqlash
+  useEffect(() => {
+    const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+    if (tableBody) {
+      const handleScroll = () => {
+        scrollPositionRef.current = tableBody.scrollTop;
+        console.log('Table scroll position:', scrollPositionRef.current);
+      };
+      tableBody.addEventListener('scroll', handleScroll);
+      return () => tableBody.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
 
   const columns = [
     {
@@ -43,19 +56,19 @@ const UserData = ({
       align: 'center',
     },
     {
-      title: "User ID",
+      title: 'User ID',
       dataIndex: 'user_id',
       key: 'user_id',
       align: 'center',
     },
     {
-      title: "Partner ID",
+      title: 'Partner ID',
       dataIndex: 'partner_id',
       key: 'partner_id',
       align: 'center',
     },
     {
-      title: "Partner Name",
+      title: 'Partner Name',
       dataIndex: 'partner_name',
       key: 'partner_name',
       align: 'center',
@@ -87,7 +100,6 @@ const UserData = ({
         </span>
       ),
     },
-
     {
       title: data[changeValue].users_list.expired,
       dataIndex: 'expired',
@@ -98,12 +110,11 @@ const UserData = ({
           {expired !== null ? (
             expired
           ) : (
-            <span style={{ color: 'red ' }}>Not Found</span>
+            <span style={{ color: 'red' }}>Not Found</span>
           )}
         </span>
       ),
     },
-
     {
       title: data[changeValue].users_list.source,
       dataIndex: 'source',
@@ -114,7 +125,7 @@ const UserData = ({
           {source !== null ? (
             <span style={{ textTransform: 'capitalize' }}>{source}</span>
           ) : (
-            <span style={{ color: 'red ' }}>Not Found</span>
+            <span style={{ color: 'red' }}>Not Found</span>
           )}
         </span>
       ),
@@ -132,7 +143,14 @@ const UserData = ({
         <div>
           <Button
             type="link"
-            onClick={() => showUserInfoModal(record.userData)}
+            onClick={() => {
+              // Table scroll pozitsiyasini saqlash
+              const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+              if (tableBody) {
+                scrollPositionRef.current = tableBody.scrollTop;
+              }
+              showUserInfoModal(record.userData);
+            }}
             style={{ paddingLeft: '10px', paddingRight: '10px' }}
           >
             <svg
@@ -150,7 +168,6 @@ const UserData = ({
               />
             </svg>
           </Button>
-
           <Button
             type="link"
             onClick={() => handleDelete(record.userData.chat_id)}
@@ -170,24 +187,6 @@ const UserData = ({
               />
             </svg>
           </Button>
-          {/* <Button
-            type="link"
-            onClick={() => showTransactionModal(record.userData)}
-            style={{ paddingLeft: "10px", paddingRight: "10px" }}
-          >
-            <svg
-              width={20}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </Button> */}
         </div>
       ),
       align: 'center',
@@ -195,12 +194,15 @@ const UserData = ({
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={dataIndex}
-      pagination={false}
-      className="ant-border-space"
-    />
+    <div ref={scrollRef}>
+      <Table
+        columns={columns}
+        dataSource={dataIndex}
+        pagination={false}
+        className="ant-border-space"
+        scroll={{ y: 600 }} // Jadvalga ichki scroll qo‘shish
+      />
+    </div>
   );
 };
 

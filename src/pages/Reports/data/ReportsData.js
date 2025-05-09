@@ -1,12 +1,12 @@
+import React, { useRef, useEffect } from 'react';
 import { Button, Table } from 'antd';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
 
-const ReportsData = ({
-  showReprortInfoModal,
-  reportsListData,
-}) => {
+const ReportsData = ({ showReprortInfoModal, reportsListData }) => {
   const { changeValue } = useMain();
+  const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
+  const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
 
   const dataIndex =
     reportsListData?.length > 0
@@ -24,6 +24,19 @@ const ReportsData = ({
         }))
       : [];
 
+  // Table scroll pozitsiyasini saqlash
+  useEffect(() => {
+    const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+    if (tableBody) {
+      const handleScroll = () => {
+        scrollPositionRef.current = tableBody.scrollTop;
+        console.log('Table scroll position:', scrollPositionRef.current);
+      };
+      tableBody.addEventListener('scroll', handleScroll);
+      return () => tableBody.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
   const columns = [
     {
       title: data[changeValue].users_list.id,
@@ -32,7 +45,7 @@ const ReportsData = ({
       align: 'center',
     },
     {
-      title: "Id",
+      title: 'Id',
       dataIndex: 'reports',
       key: 'reports',
       align: 'center',
@@ -106,7 +119,6 @@ const ReportsData = ({
       align: 'center',
       render: (date) => <span>{date?.slice(0, 10)}</span>,
     },
-
     {
       title: data[changeValue].users_list.actions,
       key: 'actions',
@@ -114,7 +126,14 @@ const ReportsData = ({
         <div>
           <Button
             type="link"
-            onClick={() => showReprortInfoModal(record.reports)}
+            onClick={() => {
+              // Table scroll pozitsiyasini saqlash
+              const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+              if (tableBody) {
+                scrollPositionRef.current = tableBody.scrollTop;
+              }
+              showReprortInfoModal(record.reports);
+            }}
             style={{ paddingLeft: '10px', paddingRight: '10px' }}
           >
             <svg
@@ -139,12 +158,15 @@ const ReportsData = ({
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={dataIndex}
-      pagination={false}
-      className="ant-border-space"
-    />
+    <div ref={scrollRef}>
+      <Table
+        columns={columns}
+        dataSource={dataIndex}
+        pagination={false}
+        className="ant-border-space"
+        scroll={{ y: 600 }} // Jadvalga ichki scroll qo‘shish
+      />
+    </div>
   );
 };
 

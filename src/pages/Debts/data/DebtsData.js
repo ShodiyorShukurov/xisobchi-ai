@@ -1,15 +1,15 @@
+import React, { useRef, useEffect } from 'react';
 import { Button, Table } from 'antd';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
 
-const DebtsData = ({
-  showDebtInfoModal,
-  debtsListData,
-}) => {
+const DebtsData = ({ showDebtInfoModal, debtsListData }) => {
   const { changeValue } = useMain();
+  const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
+  const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
 
   const dataIndex =
-  debtsListData?.length > 0
+    debtsListData?.length > 0
       ? debtsListData.map((debt, index) => ({
           id: index + 1,
           user_id: debt?.user_id,
@@ -22,6 +22,19 @@ const DebtsData = ({
         }))
       : [];
 
+  // Table scroll pozitsiyasini saqlash
+  useEffect(() => {
+    const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+    if (tableBody) {
+      const handleScroll = () => {
+        scrollPositionRef.current = tableBody.scrollTop;
+        console.log('Table scroll position:', scrollPositionRef.current);
+      };
+      tableBody.addEventListener('scroll', handleScroll);
+      return () => tableBody.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
   const columns = [
     {
       title: data[changeValue].users_list.id,
@@ -30,7 +43,7 @@ const DebtsData = ({
       align: 'center',
     },
     {
-      title: "Id",
+      title: 'Id',
       dataIndex: 'debts',
       key: 'debts',
       align: 'center',
@@ -82,7 +95,6 @@ const DebtsData = ({
       align: 'center',
       render: (date) => <span>{date?.slice(0, 10)}</span>,
     },
-
     {
       title: data[changeValue].users_list.actions,
       key: 'actions',
@@ -90,7 +102,14 @@ const DebtsData = ({
         <div>
           <Button
             type="link"
-            onClick={() => showDebtInfoModal(record.debts)}
+            onClick={() => {
+              // Table scroll pozitsiyasini saqlash
+              const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+              if (tableBody) {
+                scrollPositionRef.current = tableBody.scrollTop;
+              }
+              showDebtInfoModal(record.debts);
+            }}
             style={{ paddingLeft: '10px', paddingRight: '10px' }}
           >
             <svg
@@ -115,12 +134,15 @@ const DebtsData = ({
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={dataIndex}
-      pagination={false}
-      className="ant-border-space"
-    />
+    <div ref={scrollRef}>
+      <Table
+        columns={columns}
+        dataSource={dataIndex}
+        pagination={false}
+        className="ant-border-space"
+        scroll={{ y: 600 }} // Jadvalga ichki scroll qo‘shish
+      />
+    </div>
   );
 };
 

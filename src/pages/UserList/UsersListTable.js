@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React from 'react';
 import { Row, Col, Card, Button, Space, Input, message, Select } from 'antd';
 import useUserList from '../../hooks/UseUserList';
 import Main from '../../components/layout/Main';
@@ -27,7 +27,7 @@ function UsersListTable() {
     setDeleteModalVisible,
     userReset,
     fetchUserListData,
-    fetchUserId
+    fetchUserId,
   } = useUserList();
 
   const { changeValue } = useMain();
@@ -37,28 +37,27 @@ function UsersListTable() {
 
   const onSearch = () => {
     const cleanedPhone = phoneNumber?.replace(/^\+/, '');
-  
+
     if (!phoneNumber && !userId) {
       message.warning(data[changeValue].users_list.must_number);
       message.warning(data[changeValue].users_list.must_user_id);
       return;
     }
-  
+
     if (phoneNumber) {
       fetchUserPhoneNumberData(cleanedPhone);
     }
-  
+
     if (userId) {
       fetchUserId(userId);
     }
   };
-  
 
   return (
     <Main>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -104,7 +103,6 @@ function UsersListTable() {
                   >
                     {data[changeValue].users_list.form_button_text}
                   </Button>
-
                   <Button
                     style={{ marginLeft: '10px' }}
                     onClick={() => {
@@ -137,7 +135,6 @@ function UsersListTable() {
                     {data[changeValue].previous_button}
                   </Button>
                 )}
-
                 {userListData?.length >= 50 ? (
                   <Button color="dark" onClick={() => setNext(next + 1)}>
                     {data[changeValue].next_button}
@@ -152,7 +149,6 @@ function UsersListTable() {
           </Col>
         </Row>
 
-        {/*More Info User*/}
         <MoreInfoModal
           isModalUserInfo={isModalUserInfo}
           setIsModalUserInfo={setIsModalUserInfo}

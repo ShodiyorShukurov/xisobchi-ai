@@ -1,11 +1,11 @@
-import React from "react";
-import { Row, Col, Card, Button, Space, Form,  Select } from "antd";
-import useTransactionList from "../../hooks/UseTransactionList";
-import Main from "../../components/layout/Main";
-import TransactionData from "./data/TransactionData";
-import MoreInfoModal from "./components/MoreInfoModal";
-import { data } from "../../mock/data";
-import { useMain } from "../../hooks/UseMain";
+import React from 'react';
+import { Row, Col, Card, Button, Space, Form, Select } from 'antd';
+import useTransactionList from '../../hooks/UseTransactionList';
+import Main from '../../components/layout/Main';
+import TransactionData from './data/TransactionData';
+import MoreInfoModal from './components/MoreInfoModal';
+import { data } from '../../mock/data';
+import { useMain } from '../../hooks/UseMain';
 
 const { Option } = Select;
 
@@ -25,7 +25,7 @@ function TransactionListTable() {
     setMethod,
   } = useTransactionList();
 
-  const {changeValue} = useMain()
+  const { changeValue } = useMain();
 
   const [form] = Form.useForm();
 
@@ -39,7 +39,7 @@ function TransactionListTable() {
     <Main>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -47,9 +47,9 @@ function TransactionListTable() {
             >
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "20px",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '20px',
                 }}
               >
                 <Form
@@ -62,9 +62,7 @@ function TransactionListTable() {
                     name="month"
                   >
                     <Select
-                      placeholder={
-                        data[changeValue].transactions_info.placeholder_1
-                      }
+                      placeholder={data[changeValue].transactions_info.placeholder_1}
                     >
                       <Option key="01" value="01">
                         {data[changeValue].transactions_info.january}
@@ -110,9 +108,7 @@ function TransactionListTable() {
                     name="year"
                   >
                     <Select
-                      placeholder={
-                        data[changeValue].transactions_info.placeholder_2
-                      }
+                      placeholder={data[changeValue].transactions_info.placeholder_2}
                     >
                       <Option key="2020" value="2020">
                         2020
@@ -157,9 +153,7 @@ function TransactionListTable() {
                 >
                   <Select
                     onChange={(value) => setMethod(value)}
-                    placeholder={
-                      data[changeValue].transactions_info.placeholder_3
-                    }
+                    placeholder={data[changeValue].transactions_info.placeholder_3}
                   >
                     <Option value="all" key="ALL">
                       ALL
@@ -184,18 +178,18 @@ function TransactionListTable() {
                   {total?.sum ? (
                     <div
                       style={{
-                        marginBottom: "16px",
-                        fontSize: "18px",
-                        fontWeight: "bold",
-                        color: "#14A44D",
-                        padding: "0 20px",
+                        marginBottom: '16px',
+                        fontSize: '18px',
+                        fontWeight: 'bold',
+                        color: '#14A44D',
+                        padding: '0 20px',
                       }}
                     >
-                      {data[changeValue].transactions_info.total_amount}:{" "}
+                      {data[changeValue].transactions_info.total_amount}:{' '}
                       {Number(total?.sum / 100).toFixed(2)}
                     </div>
                   ) : (
-                    " "
+                    ' '
                   )}
 
                   <div className="table-responsive">
@@ -204,22 +198,18 @@ function TransactionListTable() {
                       showUserInfoModal={showUserInfoModal}
                     />
                   </div>
-                  <Space style={{ padding: "10px" }}>
-                    {next > 1 ? (
+                  <Space style={{ padding: '10px' }}>
+                    {next > 1 && (
                       <Button onClick={() => setNext(next - 1)}>
                         {data[changeValue].previous_button}
                       </Button>
-                    ) : (
-                      ""
                     )}
                     {transactionListData?.length >= 50 ? (
                       <Button onClick={() => setNext(next + 1)}>
                         {data[changeValue].next_button}
                       </Button>
                     ) : (
-                      <Button disabled>
-                        {data[changeValue].next_button}
-                      </Button>
+                      <Button disabled>{data[changeValue].next_button}</Button>
                     )}
                   </Space>
                 </>
@@ -227,14 +217,14 @@ function TransactionListTable() {
             </Card>
           </Col>
         </Row>
-      </div>
 
-      <MoreInfoModal
-        isModalUserInfo={isModalUserInfo}
-        setIsModalUserInfo={setIsModalUserInfo}
-        selectedUser={selectedUser}
-        setSelectedUser={setSelectedUser}
-      />
+        <MoreInfoModal
+          isModalUserInfo={isModalUserInfo}
+          setIsModalUserInfo={setIsModalUserInfo}
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+        />
+      </div>
     </Main>
   );
 }

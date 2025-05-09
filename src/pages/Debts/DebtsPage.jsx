@@ -20,7 +20,8 @@ function DebtsPage() {
     isModalDebtInfo,
     setSelectedDebt,
     setIsModalDebtInfo,
-    id, setId
+    id,
+    setId,
   } = UseDebts();
 
   const { changeValue } = useMain();
@@ -29,7 +30,7 @@ function DebtsPage() {
     <Main>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -109,7 +110,6 @@ function DebtsPage() {
           </Col>
         </Row>
 
-        {/*More Info User*/}
         <MoreInfoModal
           selectedDebt={selectedDebt}
           isModalDebtInfo={isModalDebtInfo}

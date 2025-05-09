@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Card,
-  Button,
-  Space,
-  InputNumber,
-} from 'antd';
+import { Row, Col, Card, Button, Space, InputNumber } from 'antd';
 import Main from '../../components/layout/Main';
 import MoreInfoModal from './components/MoreInfoModal';
 import { data } from '../../mock/data';
@@ -28,16 +21,16 @@ function ReportsPage() {
     setSelectedReport,
     fetchReportsListData,
     setId,
-    id
+    id,
   } = useReports();
-console.log(id)
+
   const { changeValue } = useMain();
 
   return (
     <Main>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -74,7 +67,10 @@ console.log(id)
                   </Button>
 
                   <Button
-                    onClick={() => {fetchReportsListData(); setId('');}}
+                    onClick={() => {
+                      fetchReportsListData();
+                      setId('');
+                    }}
                     type="primary"
                     style={{ marginLeft: '10px' }}
                   >
@@ -114,7 +110,6 @@ console.log(id)
           </Col>
         </Row>
 
-        {/*More Info User*/}
         <MoreInfoModal
           isModalReportInfo={isModalReportInfo}
           setIsModalReportInfo={setIsModalReportInfo}

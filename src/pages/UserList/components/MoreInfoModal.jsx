@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Modal, Button, Row, Col, Card, Table, message } from "antd";
-import Api from "../../../api";
-import { data } from "../../../mock/data";
-import { useMain } from "../../../hooks/UseMain";
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { Modal, Button, Row, Col, Card, Table, message } from 'antd';
+import Api from '../../../api';
+import { data } from '../../../mock/data';
+import { useMain } from '../../../hooks/UseMain';
 
 const MoreInfoModal = ({
   isModalUserInfo,
@@ -11,6 +13,7 @@ const MoreInfoModal = ({
   setSelectedUser,
 }) => {
   const { changeValue } = useMain();
+  const scrollPositionRef = useRef(0); // Joriy scroll pozitsiyasini saqlash
 
   /* User data start */
   const [userData, setUserData] = useState([]);
@@ -40,120 +43,120 @@ const MoreInfoModal = ({
   const userColumns = [
     {
       title: data[changeValue].user_info.id,
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
       title: data[changeValue].user_info.name,
-      dataIndex: "name",
-      key: "name",
-      align: "center",
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
     },
     {
       title: data[changeValue].user_info.user_id,
-      dataIndex: "user_id",
-      key: "user_id",
-      align: "center",
+      dataIndex: 'user_id',
+      key: 'user_id',
+      align: 'center',
     },
     {
-      title: "Partner Id",
-      dataIndex: "partner_id",
-      key: "partner_id",
-      align: "center",
+      title: 'Partner Id',
+      dataIndex: 'partner_id',
+      key: 'partner_id',
+      align: 'center',
     },
     {
       title: data[changeValue].user_info.phone_number,
-      dataIndex: "phone_number",
-      key: "phone_number",
-      align: "center",
+      dataIndex: 'phone_number',
+      key: 'phone_number',
+      align: 'center',
       render: (phone_number) =>
         phone_number ? (
-          <a href={"tel:" + phone_number}>{phone_number}</a>
+          <a href={'tel:' + phone_number}>{phone_number}</a>
         ) : (
           data[changeValue].user_info.phone_number_error
         ),
     },
     {
-      title: "Premium",
-      dataIndex: "premium",
-      key: "premium",
-      align: "center",
+      title: 'Premium',
+      dataIndex: 'premium',
+      key: 'premium',
+      align: 'center',
       render: (subscribe) => (
         <span>
           {subscribe ? (
-            <span style={{ color: "green" }}>True</span>
+            <span style={{ color: 'green' }}>True</span>
           ) : (
-            <span style={{ color: "red" }}>False</span>
+            <span style={{ color: 'red' }}>False</span>
           )}
         </span>
       ),
     },
     {
-      title: "Telegram Bot",
-      dataIndex: "telegram_bot",
-      key: "telegram_bot",
-      align: "center",
+      title: 'Telegram Bot',
+      dataIndex: 'telegram_bot',
+      key: 'telegram_bot',
+      align: 'center',
       render: (telegram_bot) => (
         <span>
           {telegram_bot ? (
-            <span style={{ color: "green" }}>True</span>
+            <span style={{ color: 'green' }}>True</span>
           ) : (
-            <span style={{ color: "red" }}>False</span>
+            <span style={{ color: 'red' }}>False</span>
           )}
         </span>
       ),
     },
     {
-      title: "Bot Step",
-      dataIndex: "bot_step",
-      key: "bot_step",
-      align: "center",
+      title: 'Bot Step',
+      dataIndex: 'bot_step',
+      key: 'bot_step',
+      align: 'center',
     },
     {
-      title: "Bot Lang",
-      dataIndex: "bot_lang",
-      key: "bot_lang",
-      align: "center",
+      title: 'Bot Lang',
+      dataIndex: 'bot_lang',
+      key: 'bot_lang',
+      align: 'center',
     },
     {
       title: data[changeValue].user_info.duration,
-      dataIndex: "duration",
-      key: "duration",
-      align: "center",
+      dataIndex: 'duration',
+      key: 'duration',
+      align: 'center',
       render: (duration) => (
         <span>
           {duration ? (
-            <span style={{ color: "green" }}>True</span>
+            <span style={{ color: 'green' }}>True</span>
           ) : (
-            <span style={{ color: "red" }}>False</span>
+            <span style={{ color: 'red' }}>False</span>
           )}
         </span>
       ),
     },
     {
-      title: "Monthly Amount",
-      dataIndex: "monthly_amount",
-      key: "monthly_amount",
-      align: "center",
+      title: 'Monthly Amount',
+      dataIndex: 'monthly_amount',
+      key: 'monthly_amount',
+      align: 'center',
     },
     {
-      title: "Limit Amount",
-      dataIndex: "limit_amount",
-      key: "limit_amount",
-      align: "center",
+      title: 'Limit Amount',
+      dataIndex: 'limit_amount',
+      key: 'limit_amount',
+      align: 'center',
     },
     {
       title: data[changeValue].user_info.expired,
-      dataIndex: "expired",
-      key: "expired",
-      align: "center",
+      dataIndex: 'expired',
+      key: 'expired',
+      align: 'center',
       render: (expired) => (
         <span>
           {expired !== null ? (
             expired
           ) : (
-            <span style={{ color: "red" }}>
+            <span style={{ color: 'red' }}>
               {data[changeValue].user_info.expired_error}
             </span>
           )}
@@ -162,15 +165,15 @@ const MoreInfoModal = ({
     },
     {
       title: data[changeValue].user_info.source,
-      dataIndex: "source",
-      key: "source",
-      align: "center",
+      dataIndex: 'source',
+      key: 'source',
+      align: 'center',
       render: (source) => (
-        <span style={{ textTransform: "capitalize" }}>
+        <span style={{ textTransform: 'capitalize' }}>
           {source !== null ? (
             source
           ) : (
-            <span style={{ color: "red" }}>
+            <span style={{ color: 'red' }}>
               {data[changeValue].user_info.source_error}
             </span>
           )}
@@ -178,31 +181,31 @@ const MoreInfoModal = ({
       ),
     },
     {
-      title: "User Blocked",
-      dataIndex: "user_blocked",
-      key: "user_blocked",
-      align: "center",
+      title: 'User Blocked',
+      dataIndex: 'user_blocked',
+      key: 'user_blocked',
+      align: 'center',
       render: (user_blocked) => (
         <span>
           {user_blocked ? (
-            <span style={{ color: "green" }}>True</span>
+            <span style={{ color: 'green' }}>True</span>
           ) : (
-            <span style={{ color: "red" }}>False</span>
+            <span style={{ color: 'red' }}>False</span>
           )}
         </span>
       ),
     },
     {
-      title: "User Free",
-      dataIndex: "used_free",
-      key: "used_free",
-      align: "center",
+      title: 'User Free',
+      dataIndex: 'used_free',
+      key: 'used_free',
+      align: 'center',
       render: (used_free) => (
         <span>
           {used_free ? (
-            <span style={{ color: "green" }}>True</span>
+            <span style={{ color: 'green' }}>True</span>
           ) : (
-            <span style={{ color: "red" }}>False</span>
+            <span style={{ color: 'red' }}>False</span>
           )}
         </span>
       ),
@@ -212,16 +215,16 @@ const MoreInfoModal = ({
   const fetchUserData = async () => {
     if (!selectedUser?.chat_id) return;
     try {
-      const res = await Api.get("/user/" + selectedUser?.chat_id);
+      const res = await Api.get('/user/' + selectedUser?.chat_id);
       if (res.data) {
         setUserData([res.data.data]);
       } else {
         setUserData([]);
-        message.warning("No user data found");
+        message.warning('No user data found');
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
-      message.error("Failed to fetch user data");
+      console.error('Error fetching user data:', error);
+      message.error('Failed to fetch user data');
     }
   };
 
@@ -246,63 +249,63 @@ const MoreInfoModal = ({
   const columns = [
     {
       title: data[changeValue].transaction_info.id,
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
       title: data[changeValue].transaction_info.transaction_id,
-      dataIndex: "transaction_id",
-      key: "transaction_id",
-      align: "center",
+      dataIndex: 'transaction_id',
+      key: 'transaction_id',
+      align: 'center',
       render: (transaction_id) =>
         transaction_id ? (
           transaction_id
         ) : (
-          <span style={{ color: "red" }}>
+          <span style={{ color: 'red' }}>
             {data[changeValue].transaction_info.transaction_id_error}
           </span>
         ),
     },
     {
       title: data[changeValue].transaction_info.user_id,
-      dataIndex: "user_id",
-      key: "user_id",
-      align: "center",
+      dataIndex: 'user_id',
+      key: 'user_id',
+      align: 'center',
     },
     {
       title: data[changeValue].transaction_info.amount,
-      dataIndex: "amount",
-      key: "amount",
-      align: "center",
+      dataIndex: 'amount',
+      key: 'amount',
+      align: 'center',
       render: (amount) =>
         `${Number(amount / 100).toFixed(2)} ${data[changeValue].sum}`,
     },
     {
       title: data[changeValue].transaction_info.method,
-      dataIndex: "method",
-      key: "method",
-      align: "center",
+      dataIndex: 'method',
+      key: 'method',
+      align: 'center',
     },
     {
       title: data[changeValue].transaction_info.success_trans_id,
-      dataIndex: "success_trans_id",
-      key: "success_trans_id",
-      align: "center",
+      dataIndex: 'success_trans_id',
+      key: 'success_trans_id',
+      align: 'center',
       render: (success_trans_id) =>
         success_trans_id ? (
           success_trans_id
         ) : (
-          <span style={{ color: "red" }}>
+          <span style={{ color: 'red' }}>
             {data[changeValue].transaction_info.success_trans_id_error}
           </span>
         ),
     },
     {
       title: data[changeValue].transaction_info.ofd_url,
-      dataIndex: "ofd_url",
-      key: "ofd_url",
-      align: "center",
+      dataIndex: 'ofd_url',
+      key: 'ofd_url',
+      align: 'center',
       render: (_, record) =>
         record?.ofd_url ? (
           <a href={record?.ofd_url} target="_blank">
@@ -311,16 +314,16 @@ const MoreInfoModal = ({
             </Button>
           </a>
         ) : (
-          <span style={{ color: "red" }}>
+          <span style={{ color: 'red' }}>
             {data[changeValue].transaction_info.ofd_url_error}
           </span>
         ),
     },
     {
       title: data[changeValue].transaction_info.create_at,
-      dataIndex: "create_at",
-      key: "create_at",
-      align: "center",
+      dataIndex: 'create_at',
+      key: 'create_at',
+      align: 'center',
     },
   ];
 
@@ -332,14 +335,14 @@ const MoreInfoModal = ({
         setUserTransactionData(res.data.data);
       } else {
         setUserTransactionData([]);
-        message.warning("No transaction data found for this user");
+        message.warning('No transaction data found for this user');
       }
     } catch (error) {
-      console.error("Error fetching transaction data:", error);
+      console.error('Error fetching transaction data:', error);
       if (error.response?.status === 404) {
-        message.error("Transaction endpoint not found");
+        message.error('Transaction endpoint not found');
       } else {
-        message.error("Failed to fetch transaction data");
+        message.error('Failed to fetch transaction data');
       }
     }
   };
@@ -364,59 +367,59 @@ const MoreInfoModal = ({
 
   const reportColumns = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
-      title: "Miqdor",
-      dataIndex: "amount",
-      key: "amount",
-      align: "center",
+      title: 'Miqdor',
+      dataIndex: 'amount',
+      key: 'amount',
+      align: 'center',
       render: (amount) => `${Number(amount).toLocaleString()} so'm`,
     },
     {
-      title: "Sana",
-      dataIndex: "date",
-      key: "date",
-      align: "center",
+      title: 'Sana',
+      dataIndex: 'date',
+      key: 'date',
+      align: 'center',
       render: (date) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "Izoh",
-      dataIndex: "comment",
-      key: "comment",
-      align: "center",
+      title: 'Izoh',
+      dataIndex: 'comment',
+      key: 'comment',
+      align: 'center',
     },
     {
-      title: "Kategoriya",
-      dataIndex: "category_name",
-      key: "category_name",
-      align: "center",
+      title: 'Kategoriya',
+      dataIndex: 'category_name',
+      key: 'category_name',
+      align: 'center',
     },
     {
-      title: "Valyuta",
-      dataIndex: "currency",
-      key: "currency",
-      align: "center",
+      title: 'Valyuta',
+      dataIndex: 'currency',
+      key: 'currency',
+      align: 'center',
     },
     {
-      title: "Daromad",
-      dataIndex: "income",
-      key: "income",
-      align: "center",
+      title: 'Daromad',
+      dataIndex: 'income',
+      key: 'income',
+      align: 'center',
       render: (income) => (
-        <span style={{ color: income ? "green" : "red" }}>
-          {income ? "Daromad" : "Xarajat"}
+        <span style={{ color: income ? 'green' : 'red' }}>
+          {income ? 'Daromad' : 'Xarajat'}
         </span>
       ),
     },
     {
-      title: "Yaratilgan Sana",
-      dataIndex: "create_at",
-      key: "create_at",
-      align: "center",
+      title: 'Yaratilgan Sana',
+      dataIndex: 'create_at',
+      key: 'create_at',
+      align: 'center',
       render: (date) => new Date(date).toLocaleDateString(),
     },
   ];
@@ -431,16 +434,17 @@ const MoreInfoModal = ({
         setReportsData(res.data.data);
       } else {
         setReportsData([]);
-        message.warning("No report data found for this user");
+        message.warning('No report data found for this user');
       }
     } catch (error) {
-      console.error("Error fetching report data:", error);
-      message.error("Failed to fetch report data");
+      console.error('Error fetching report data:', error);
+      message.error('Failed to fetch report data');
     }
   };
+
   /* User reports data end */
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedUser?.chat_id) {
       fetchUserData();
       fetchUserTransactionData();
@@ -448,19 +452,61 @@ const MoreInfoModal = ({
     }
   }, [selectedUser?.chat_id]);
 
+  useEffect(() => {
+    if (isModalUserInfo) {
+      // Joriy scroll pozitsiyasini saqlash
+      scrollPositionRef.current = window.scrollY;
+      console.log('Modal opened, saved scroll:', scrollPositionRef.current);
+      // Sahifani fixed holatga o‘tkazish
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollPositionRef.current}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Modal yopilganda scrollni qayta tiklash
+      const scrollY = scrollPositionRef.current;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, scrollY);
+      console.log('Modal closed, restored scroll:', scrollY);
+    }
+
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+    };
+  }, [isModalUserInfo]);
+
+  const handleCancel = () => {
+    setIsModalUserInfo(false);
+    setSelectedUser(null);
+    setUserTransactionData([]);
+    setUserData([]);
+    setReportsData([]);
+  };
+
   return (
     <Modal
       title={data[changeValue].user_info.title}
       open={isModalUserInfo}
-      onCancel={() => {
-        setIsModalUserInfo(false);
-        setSelectedUser(null);
-        setUserTransactionData([]);
-        setUserData([]);
-        setReportsData([]);
-      }}
+      onCancel={handleCancel}
       footer={null}
       width={1000}
+      centered
+      maskClosable={true}
+      autoFocusButton={null} // Avtomatik fokusni o‘chirish
+      focusTriggerAfterClose={false} // Yopilganda fokusni qaytarmaslik
+      bodyStyle={{
+        maxHeight: '70vh',
+        overflowY: 'auto',
+      }}
+      style={{
+        zIndex: 10000,
+      }}
     >
       <div className="tabled">
         <Row gutter={[24, 0]}>

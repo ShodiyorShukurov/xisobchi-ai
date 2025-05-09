@@ -1,10 +1,12 @@
-import { Button, Table } from "antd";
-import { data } from "../../../mock/data";
-import {useMain} from '../../../hooks/UseMain'
+import React, { useRef, useEffect } from 'react';
+import { Button, Table } from 'antd';
+import { data } from '../../../mock/data';
+import { useMain } from '../../../hooks/UseMain';
 
 const TransactionData = ({ transactionListData, showUserInfoModal }) => {
-
-  const {changeValue} = useMain()
+  const { changeValue } = useMain();
+  const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
+  const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
 
   const dataIndex =
     transactionListData?.length > 0
@@ -12,45 +14,64 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
           id: index + 1,
           amount: transaction.amount,
           method: transaction.method,
-          create_at: transaction.create_at.slice(0, 10  ),
+          create_at: transaction.create_at.slice(0, 10),
           transactionId: transaction.id,
         }))
       : [];
 
+  // Table scroll pozitsiyasini saqlash
+  useEffect(() => {
+    const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+    if (tableBody) {
+      const handleScroll = () => {
+        scrollPositionRef.current = tableBody.scrollTop;
+        console.log('Table scroll position:', scrollPositionRef.current);
+      };
+      tableBody.addEventListener('scroll', handleScroll);
+      return () => tableBody.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
   const columns = [
     {
       title: data[changeValue].transactions_info.id,
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
       title: data[changeValue].transactions_info.amount,
-      dataIndex: "amount",
-      key: "amount",
-      align: "center",
-      render: (amount) =>
-        `${Number(amount)} ${data[changeValue].sum}`,
+      dataIndex: 'amount',
+      key: 'amount',
+      align: 'center',
+      render: (amount) => `${Number(amount)} ${data[changeValue].sum}`,
     },
     {
       title: data[changeValue].transactions_info.method,
-      dataIndex: "method",
-      key: "method",
-      align: "center",
+      dataIndex: 'method',
+      key: 'method',
+      align: 'center',
     },
     {
       title: data[changeValue].transactions_info.create_at,
-      dataIndex: "create_at",
-      key: "create_at",
-      align: "center",
+      dataIndex: 'create_at',
+      key: 'create_at',
+      align: 'center',
     },
     {
       title: data[changeValue].transactions_info.actions,
-      key: "actions",
+      key: 'actions',
       render: (_, record) => (
         <Button
           type="link"
-          onClick={() => showUserInfoModal(record.transactionId)}
+          onClick={() => {
+            // Table scroll pozitsiyasini saqlash
+            const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+            if (tableBody) {
+              scrollPositionRef.current = tableBody.scrollTop;
+            }
+            showUserInfoModal(record.transactionId);
+          }}
         >
           <svg
             width={20}
@@ -68,17 +89,20 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
           </svg>
         </Button>
       ),
-      align: "center",
+      align: 'center',
     },
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={dataIndex}
-      pagination={false}
-      className="ant-border-space"
-    />
+    <div ref={scrollRef}>
+      <Table
+        columns={columns}
+        dataSource={dataIndex}
+        pagination={false}
+        className="ant-border-space"
+        scroll={{ y: 600 }} // Jadvalga ichki scroll qo‘shish
+      />
+    </div>
   );
 };
 
