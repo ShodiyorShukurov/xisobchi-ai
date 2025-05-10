@@ -130,7 +130,15 @@ const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
             },
           ]}
         >
-          <Input style={{ width: '100%' }} placeholder="Enter bot lang" />
+          <Select
+            placeholder="Select language"
+            style={{ width: '100%' }}
+            options={[
+              { value: 'eng', label: 'English' },
+              { value: 'ru', label: 'Russian' },
+              { value: 'uz', label: 'Uzbek' },
+            ]}
+          />
         </Form.Item>
 
         <Form.Item
