@@ -11,8 +11,9 @@ const useDashboard = () => {
     setIsLoading(true);
 
     try {
-      const res = await Api.get('/users/statistics');
+      const res = await Api.get('/user/statistics/data');
       setUserStatistics(res.data.data);
+      console.log(res.data.data);
     } catch (error) {
       console.log(error);
       if (error.message === 'Request failed with status code 404') {
@@ -70,7 +71,7 @@ const useDashboard = () => {
   const getUserStatisticsMonthData = async () => {
     setIsLoading(true);
     try {
-      const res = await Api.get('/users/statistics/increase');
+      const res = await Api.get('/user/statistics/increase');
       setUserStatisticsMonth(res.data.data);
     } catch (error) {
       console.log(error);
@@ -89,7 +90,7 @@ const useDashboard = () => {
   const getUserStatisticsSouce = async () => {
     setIsLoading(true);
     try {
-      const res = await Api.get('/users/statistics/source');
+      const res = await Api.get('/user/statistics/source');
       setUserStatisticsSource(res.data.data);
     } catch (error) {
       console.log(error);

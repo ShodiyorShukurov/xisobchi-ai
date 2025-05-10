@@ -83,12 +83,6 @@ function Home() {
 
   const count = [
     {
-      today: data[changeValue]?.dashboard?.channel_members,
-      title: userStatistics?.bot_members,
-      icon: profile,
-      bnb: "bnb2",
-    },
-    {
       today: data[changeValue]?.dashboard?.payed_users,
       title: userStatistics?.payed_user,
       icon: profile,
