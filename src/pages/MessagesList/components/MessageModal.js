@@ -2,12 +2,15 @@ import { Button, Form, Input, message, Modal, Select, Upload } from 'antd';
 import Api from '../../../api';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
-import TextArea from 'antd/lib/input/TextArea';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { UploadOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 
 const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
   const { changeValue } = useMain();
   const [form] = Form.useForm();
+  const [textValue, setTextValue] = useState('<p></p>');
 
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -32,6 +35,7 @@ const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
       getMessage();
       handleCancel();
       form.resetFields();
+      setTextValue('<p></p>');
     } catch (error) {
       console.error(error);
       // message.error(data[changeValue].bot_settings.price_error);
@@ -42,7 +46,11 @@ const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
     <Modal
       title="Send Message"
       open={isModalVisible}
-      onCancel={handleCancel}
+      onCancel={() => {
+        handleCancel();
+        setTextValue('<p></p>');
+        form.resetFields();
+      }}
       footer={null}
     >
       <Form form={form} layout="vertical" onFinish={handleEditPratner}>
@@ -56,7 +64,49 @@ const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
             },
           ]}
         >
-          <TextArea style={{ width: '100%' }} />
+          <CKEditor
+            editor={ClassicEditor}
+            config={{
+              toolbar: [
+                'heading',
+                '|',
+                'bold',
+                'italic',
+                'underline',
+                'strikethrough',
+                'code',
+                'subscript',
+                'superscript',
+                '|',
+                'link',
+                'bulletedList',
+                'numberedList',
+                'blockQuote',
+                'codeBlock',
+                '|',
+                'outdent',
+                'indent',
+                'alignment',
+                '|',
+                'undo',
+                'redo',
+                'removeFormat',
+                '|',
+                'fontSize',
+                'fontColor',
+                'fontBackgroundColor',
+              ],
+            }}
+            data={textValue}
+            onReady={(editor) => {
+              console.log('Editor is ready to use!', editor);
+            }}
+            onChange={(_, editor) => {
+              const data = editor.getData();
+              setTextValue(data);
+              form.setFieldsValue({ text: data });
+            }}
+          />
         </Form.Item>
 
         <Form.Item name="premium" label="Premium">
