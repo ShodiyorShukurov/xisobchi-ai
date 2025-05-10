@@ -51,7 +51,7 @@ const UseCategory = () => {
 
   const handleDelete = async () => {
     setEditData(true);
-    console.log(deleteId);
+
     const data = {
       id: deleteId,
     };
