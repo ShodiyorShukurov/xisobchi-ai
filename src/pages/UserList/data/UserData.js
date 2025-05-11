@@ -24,6 +24,7 @@ const UserData = ({
           duration: user.duration,
           expired: user.expired_date,
           source: user.source,
+          paid_msg: user.paid_msg,
           monthly_amount: user.monthly_amount,
           userData: user,
         }))
@@ -124,6 +125,21 @@ const UserData = ({
         <span>
           {source !== null ? (
             <span style={{ textTransform: 'capitalize' }}>{source}</span>
+          ) : (
+            <span style={{ color: 'red' }}>Not Found</span>
+          )}
+        </span>
+      ),
+    },
+    {
+      title: "Paid Message",
+      dataIndex: 'paid_msg',
+      key: 'paid_msg',
+      align: 'center',
+      render: (paid_msg) => (
+        <span>
+          {paid_msg !== null ? (
+            <span style={{ textTransform: 'capitalize' }}>{paid_msg}</span>
           ) : (
             <span style={{ color: 'red' }}>Not Found</span>
           )}

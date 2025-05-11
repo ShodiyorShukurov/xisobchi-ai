@@ -22,6 +22,7 @@ const MoreInfoModal = ({
           id: transaction.id,
           transaction_id: transaction.transaction_id,
           user_id: transaction.user_id,
+          paid_msg: transaction.paid_msg,
           amount: transaction.amount,
           method: transaction.method,
           success_trans_id: transaction.success_trans_id,
@@ -56,6 +57,22 @@ const MoreInfoModal = ({
       dataIndex: 'user_id',
       key: 'user_id',
       align: 'center',
+    },
+    {
+      title: "Paid Message",
+      dataIndex: 'paid_msg',
+      key: 'paid_msg',
+      align: 'center',
+      render: (paid_msg) =>
+        paid_msg ? (
+          <span style={{ color: 'green' }}>
+            {paid_msg}
+          </span>
+        ) : (
+          <span style={{ color: 'red' }}>
+              Not Paid
+          </span>
+        ),
     },
     {
       title: data[changeValue].transaction_info.amount,

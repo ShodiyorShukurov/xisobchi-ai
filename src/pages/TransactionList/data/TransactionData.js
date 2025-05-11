@@ -14,6 +14,7 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
           id: index + 1,
           amount: transaction.amount,
           method: transaction.method,
+          paid_msg: transaction.paid_msg,
           create_at: transaction.create_at.slice(0, 10),
           transactionId: transaction.id,
         }))
@@ -53,6 +54,17 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
       align: 'center',
     },
     {
+      title: "Paid Message",
+      dataIndex: 'paid_msg',
+      key: 'paid_msg',
+      align: 'center',
+      render: (paid_msg) => (
+        <span style={{ color: paid_msg ? 'green' : 'red' }}>
+          {paid_msg ? paid_msg : "Not Paid"}
+        </span>
+      ),
+    },
+     {
       title: data[changeValue].transactions_info.create_at,
       dataIndex: 'create_at',
       key: 'create_at',
