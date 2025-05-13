@@ -16,6 +16,7 @@ const DebtsData = ({ showDebtInfoModal, debtsListData }) => {
           amount: debt?.amount,
           currency: debt?.currency,
           income: debt?.income,
+          comment: debt?.comment,
           deadline: debt?.deadline,
           date: debt?.date,
           debts: debt?.id,
@@ -65,6 +66,15 @@ const DebtsData = ({ showDebtInfoModal, debtsListData }) => {
       dataIndex: 'currency',
       key: 'currency',
       align: 'center',
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      key: 'comment',
+      align: 'center',
+      render: (comment) => <span>{
+        comment.length > 20 ? `${comment.slice(0, 10)}...` : comment
+        }</span>,
     },
     {
       title: 'Income',

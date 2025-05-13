@@ -109,6 +109,10 @@ const MoreInfoModal = ({
                       <List.Item>Amount: {item.amount}</List.Item>
                       <List.Item>Currency: {item.currency}</List.Item>
                       <List.Item>
+                        Comment:{' '}
+                        {item.comment}
+                      </List.Item>
+                      <List.Item>
                         Income:{' '}
                         {item.income ? (
                           <span style={{ color: 'green' }}>True</span>
