@@ -12,6 +12,7 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
     transactionListData?.length > 0
       ? transactionListData?.map((transaction, index) => ({
           id: index + 1,
+          user_id: transaction.user_id,
           amount: transaction.amount,
           method: transaction.method,
           paid_msg: transaction.paid_msg,
@@ -38,6 +39,12 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
       title: data[changeValue].transactions_info.id,
       dataIndex: 'id',
       key: 'id',
+      align: 'center',
+    },
+    {
+      title: "User ID",
+      dataIndex: 'user_id',
+      key: 'user_id',
       align: 'center',
     },
     {

@@ -19,25 +19,37 @@ const MoreInfoModal = ({
   const [userData, setUserData] = useState([]);
 
   const userIndex = userData?.length
-    ? userData.map((user) => ({
-        id: user.id,
-        name: user.name,
-        user_id: user.chat_id,
-        partner_id: user.partner_id,
-        phone_number: user.phone_number,
-        premium: user.premium,
-        telegram_bot: user.telegram_bot,
-        bot_step: user.bot_step,
-        bot_lang: user.bot_lang,
-        duration: user.duration,
-        source: user.source,
-        expired: user.expired_date,
-        monthly_amount: user.monthly_amount,
-        limit_amount: user.limit_amount,
-        user_blocked: user.user_blocked,
-        used_free: user.used_free,
-        userData: user,
-      }))
+    ? userData.map((user) => {
+        const expiredDate = user.expired_date
+          ? new Date(user.expired_date * 1000).toLocaleString('uz-UZ', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour12: false,
+              timeZone: 'Asia/Tashkent',
+            })
+          : null;
+
+        return {
+          id: user.id,
+          name: user.name,
+          user_id: user.chat_id,
+          partner_id: user.partner_id,
+          phone_number: user.phone_number,
+          premium: user.premium,
+          telegram_bot: user.telegram_bot,
+          bot_step: user.bot_step,
+          bot_lang: user.bot_lang,
+          duration: user.duration,
+          source: user.source,
+          expired: expiredDate,
+          monthly_amount: user.monthly_amount,
+          limit_amount: user.limit_amount,
+          user_blocked: user.user_blocked,
+          used_free: user.used_free,
+          userData: user,
+        };
+      })
     : [];
 
   const userColumns = [
@@ -330,7 +342,9 @@ const MoreInfoModal = ({
   const fetchUserTransactionData = async () => {
     if (!selectedUser?.chat_id) return;
     try {
-      const res = await Api.get(`/transactions/user?user_id=${selectedUser?.chat_id}`);
+      const res = await Api.get(
+        `/transactions/user?user_id=${selectedUser?.chat_id}`
+      );
       if (res?.data?.data?.length > 0) {
         setUserTransactionData(res.data.data);
       } else {

@@ -3,51 +3,61 @@ import { Button, Table } from 'antd';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
 
-const UserData = ({
-  showUserInfoModal,
-  userListData,
-  handleDelete,
-}) => {
+const UserData = ({ showUserInfoModal, userListData, handleDelete }) => {
   const { changeValue } = useMain();
-  const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
-  const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
+  // const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
+  // const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
 
   const dataIndex =
     userListData?.length > 0
-      ? userListData.map((user, index) => ({
-          id: index + 1,
-          name: user.name,
-          phone_number: user.phone_number,
-          user_id: user.chat_id,
-          partner_id: user.partner_id,
-          partner_name: user.partner_name,
-          duration: user.duration,
-          expired: user.expired_date,
-          source: user.source,
-          paid_msg: user.paid_msg,
-          monthly_amount: user.monthly_amount,
-          userData: user,
-        }))
+      ? userListData.map((user, index) => {
+          const expiredDate = user.expired_date
+            ? new Date(user.expired_date * 1000).toLocaleString('uz-UZ', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour12: false,
+                timeZone: 'Asia/Tashkent',
+              })
+            : null;
+
+          return {
+            id: index + 1,
+            name: user.name,
+            phone_number: user.phone_number,
+            user_id: user.chat_id,
+            partner_id: user.partner_id,
+            partner_name: user.partner_name,
+            duration: user.duration,
+            expired: expiredDate, // Formatted date
+            source: user.source,
+            paid_msg: user.paid_msg,
+            bot_step: user.bot_step,
+            monthly_amount: user.monthly_amount,
+            userData: user,
+          };
+        })
       : [];
 
   // Table scroll pozitsiyasini saqlash
-  useEffect(() => {
-    const tableBody = scrollRef.current?.querySelector('.ant-table-body');
-    if (tableBody) {
-      const handleScroll = () => {
-        scrollPositionRef.current = tableBody.scrollTop;
-        console.log('Table scroll position:', scrollPositionRef.current);
-      };
-      tableBody.addEventListener('scroll', handleScroll);
-      return () => tableBody.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+  //   if (tableBody) {
+  //     const handleScroll = () => {
+  //       scrollPositionRef.current = tableBody.scrollTop;
+  //       console.log('Table scroll position:', scrollPositionRef.current);
+  //     };
+  //     tableBody.addEventListener('scroll', handleScroll);
+  //     return () => tableBody.removeEventListener('scroll', handleScroll);
+  //   }
+  // }, []);
 
   const columns = [
     {
       title: data[changeValue].users_list.id,
       dataIndex: 'id',
       key: 'id',
+      width: 50,
       align: 'center',
     },
     {
@@ -132,7 +142,7 @@ const UserData = ({
       ),
     },
     {
-      title: "Paid Message",
+      title: 'Paid Message',
       dataIndex: 'paid_msg',
       key: 'paid_msg',
       align: 'center',
@@ -140,6 +150,21 @@ const UserData = ({
         <span>
           {paid_msg !== null ? (
             <span style={{ textTransform: 'capitalize' }}>{paid_msg}</span>
+          ) : (
+            <span style={{ color: 'red' }}>Not Found</span>
+          )}
+        </span>
+      ),
+    },
+    {
+      title: 'Bot Step',
+      dataIndex: 'bot_step',
+      key: 'bot_step',
+      align: 'center',
+      render: (bot_step) => (
+        <span>
+          {bot_step !== null ? (
+            <span style={{ textTransform: 'capitalize' }}>{bot_step}</span>
           ) : (
             <span style={{ color: 'red' }}>Not Found</span>
           )}
@@ -161,10 +186,10 @@ const UserData = ({
             type="link"
             onClick={() => {
               // Table scroll pozitsiyasini saqlash
-              const tableBody = scrollRef.current?.querySelector('.ant-table-body');
-              if (tableBody) {
-                scrollPositionRef.current = tableBody.scrollTop;
-              }
+              // const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+              // if (tableBody) {
+              //   scrollPositionRef.current = tableBody.scrollTop;
+              // }
               showUserInfoModal(record.userData);
             }}
             style={{ paddingLeft: '10px', paddingRight: '10px' }}
@@ -210,15 +235,15 @@ const UserData = ({
   ];
 
   return (
-    <div ref={scrollRef}>
-      <Table
-        columns={columns}
-        dataSource={dataIndex}
-        pagination={false}
-        className="ant-border-space"
-        scroll={{ y: 600 }} // Jadvalga ichki scroll qo‘shish
-      />
-    </div>
+    // <div>
+    <Table
+      columns={columns}
+      dataSource={dataIndex}
+      pagination={false}
+      className="ant-border-space"
+      scroll={{ y: 600, x: 1400 }}
+    />
+    // </div>
   );
 };
 
