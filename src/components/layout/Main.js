@@ -38,8 +38,7 @@ function Main({ children }) {
         onClose={() => setIsVisible(false)}
         open={isVisible}
         key={'right'}
-        width={250}
-        className={`drawer-sidebar`}
+        width={300}
       >
         <Layout className={`layout-dashboard`}>
           <Sider
@@ -52,29 +51,11 @@ function Main({ children }) {
             style={{ background: sidenavType }}
           >
             <Sidenav color={sidenavColor} />
-          </Sider>
-        </Layout>
-      </Drawer>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-        trigger={null}
-        width={250}
-        theme="light"
-        className={`sider-primary ant-layout-sider-primary ${
-          sidenavType === '#fff' ? 'active-route' : ''
-        }`}
-        style={{ background: sidenavType }}
-      >
-        <Sidenav color={sidenavColor} />
-        <Button
+            <Button
           type="link"
           style={{
             position: 'absolute',
-            bottom: 10,
+            bottom: 50,
             right: 0,
           }}
           onClick={() => logOut()}
@@ -94,9 +75,9 @@ function Main({ children }) {
           </svg>
           Log out
         </Button>
-      </Sider>
-      <Layout>
-        {fixed ? (
+          </Sider>
+        </Layout>
+      </Drawer>
           <Affix>
             <AntHeader className={`${fixed ? 'ant-header-fixed' : ''}`}>
               <Header
@@ -109,20 +90,7 @@ function Main({ children }) {
               />
             </AntHeader>
           </Affix>
-        ) : (
-          <AntHeader className={`${fixed ? 'ant-header-fixed' : ''}`}>
-            <Header
-              onPress={openDrawer}
-              name={pathname}
-              subName={pathname}
-              handleSidenavColor={handleSidenavColor}
-              handleSidenavType={handleSidenavType}
-              handleFixedNavbar={handleFixedNavbar}
-            />
-          </AntHeader>
-        )}
-        <Content className="content-ant">{children}</Content>
-      </Layout>
+        <Content  className="content-ant">{children}</Content>
     </Layout>
   );
 }

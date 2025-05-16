@@ -110,7 +110,7 @@ function Header({
         <Col span={24} md={18} className="header-control">
           <Button
             type="link"
-            className="sidebar-toggler"
+            // className="sidebar-toggler"
             onClick={() => onPress()}
           >
             {toggler}

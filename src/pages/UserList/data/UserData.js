@@ -73,18 +73,6 @@ const UserData = ({ showUserInfoModal, userListData, handleDelete }) => {
       align: 'center',
     },
     {
-      title: 'Partner ID',
-      dataIndex: 'partner_id',
-      key: 'partner_id',
-      align: 'center',
-    },
-    {
-      title: 'Partner Name',
-      dataIndex: 'partner_name',
-      key: 'partner_name',
-      align: 'center',
-    },
-    {
       title: data[changeValue].users_list.phone_number,
       dataIndex: 'phone_number',
       key: 'phone_number',
@@ -125,6 +113,18 @@ const UserData = ({ showUserInfoModal, userListData, handleDelete }) => {
           )}
         </span>
       ),
+    },
+        {
+      title: 'Partner ID',
+      dataIndex: 'partner_id',
+      key: 'partner_id',
+      align: 'center',
+    },
+    {
+      title: 'Partner Name',
+      dataIndex: 'partner_name',
+      key: 'partner_name',
+      align: 'center',
     },
     {
       title: data[changeValue].users_list.source,
