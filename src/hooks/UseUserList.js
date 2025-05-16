@@ -62,7 +62,7 @@ const useUserList = () => {
     setIsLoading(true);
     try {
       const res = await Api.get(
-        `/users/list?limit=1&page=${next}&phone=${phoneNumber}`
+        `/users/list?limit=50&page=${next}&phone=${phoneNumber}`
       );
       setUserListData(res.data.data);
     } catch (error) {
