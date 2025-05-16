@@ -47,6 +47,7 @@ const MoreInfoModal = ({
           limit_amount: user.limit_amount,
           user_blocked: user.user_blocked,
           used_free: user.used_free,
+          create_at: user.create_at,
           userData: user,
         };
       })
@@ -222,6 +223,13 @@ const MoreInfoModal = ({
         </span>
       ),
     },
+      {
+      title: 'Yaratilgan Sana',
+      dataIndex: 'create_at',
+      key: 'create_at',
+      align: 'center',
+      render: (date) => new Date(date).toLocaleString(),
+    },
   ];
 
   const fetchUserData = async () => {
@@ -254,7 +262,7 @@ const MoreInfoModal = ({
         success_trans_id: user.success_trans_id,
         ofd_url: user.ofd_url,
         method: user.method,
-        create_at: user.create_at.slice(0, 10),
+        create_at: user.create_at,
       }))
     : [];
 
@@ -336,6 +344,7 @@ const MoreInfoModal = ({
       dataIndex: 'create_at',
       key: 'create_at',
       align: 'center',
+      render: (date) => new Date(date).toLocaleString(),
     },
   ];
 
