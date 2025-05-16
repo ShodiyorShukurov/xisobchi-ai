@@ -37,8 +37,9 @@ function Main({ children }) {
         closable={false}
         onClose={() => setIsVisible(false)}
         open={isVisible}
-        key={'right'}
+        // key={'right'}
         width={300}
+        // className={`drawer-sidebar`}
       >
         <Layout className={`layout-dashboard`}>
           <Sider
@@ -55,7 +56,7 @@ function Main({ children }) {
           type="link"
           style={{
             position: 'absolute',
-            bottom: 50,
+            bottom: 10,
             right: 0,
           }}
           onClick={() => logOut()}

@@ -404,7 +404,7 @@ const MoreInfoModal = ({
       title: 'Izoh',
       dataIndex: 'comment',
       key: 'comment',
-      align: 'center',
+      // align: 'center',
     },
     {
       title: 'Kategoriya',

@@ -86,6 +86,16 @@ function Header({
         {setting}
       </div>
       <Row gutter={[24, 0]}>
+        <Button
+          type="link"
+          // className="sidebar-toggler"
+          style={{
+            padding: 0,
+          }}
+          onClick={() => onPress()}
+        >
+          {toggler}
+        </Button>
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
@@ -108,14 +118,6 @@ function Header({
         </Col>
 
         <Col span={24} md={18} className="header-control">
-          <Button
-            type="link"
-            // className="sidebar-toggler"
-            onClick={() => onPress()}
-          >
-            {toggler}
-          </Button>
-
           <Drawer
             className="settings-drawer"
             mask={true}
