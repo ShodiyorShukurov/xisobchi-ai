@@ -1,5 +1,5 @@
-import React from "react";
-import Api from "../api";
+import React from 'react';
+import Api from '../api';
 
 const useTransactionList = () => {
   const [transactionListData, setTransactionListData] = React.useState([]);
@@ -9,7 +9,16 @@ const useTransactionList = () => {
   const [isModalUserInfo, setIsModalUserInfo] = React.useState(false);
   const [selectedUser, setSelectedUser] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [method, setMethod] = React.useState("");
+  const [method, setMethod] = React.useState('');
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const [transactionId, setTransactionId] = React.useState(null);
+
+  const showCancelTransactionModal = (transactionId) => {
+    setTransactionId(transactionId);
+    setIsModalVisible(true);
+  };
+
+
 
   const showUserInfoModal = (record) => {
     setSelectedUser(record);
@@ -23,7 +32,7 @@ const useTransactionList = () => {
       setTransactionListData(res.data.data);
     } catch (error) {
       console.log(error);
-      if (error.message === "Request failed with status code 404") {
+      if (error.message === 'Request failed with status code 404') {
         setTransactionListData([]);
       }
     } finally {
@@ -43,7 +52,7 @@ const useTransactionList = () => {
       setTotal(res.data.total);
     } catch (error) {
       console.log(error);
-      if (error.message === "Request failed with status code 404") {
+      if (error.message === 'Request failed with status code 404') {
         setTransactionListData([]);
         setTotal([]);
       }
@@ -63,7 +72,7 @@ const useTransactionList = () => {
       setTotal(res.data.total);
     } catch (error) {
       console.log(error);
-      if (error.message === "Request failed with status code 404") {
+      if (error.message === 'Request failed with status code 404') {
         setTransactionListData([]);
         setTotal([]);
       }
@@ -91,8 +100,12 @@ const useTransactionList = () => {
     selectedUser,
     setSelectedUser,
     isLoading,
-    setMethod, 
-    method
+    setMethod,
+    method,
+    isModalVisible,
+    setIsModalVisible,
+    showCancelTransactionModal,
+    transactionId,
   };
 };
 

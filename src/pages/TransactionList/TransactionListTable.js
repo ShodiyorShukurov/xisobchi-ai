@@ -6,6 +6,7 @@ import TransactionData from './data/TransactionData';
 import MoreInfoModal from './components/MoreInfoModal';
 import { data } from '../../mock/data';
 import { useMain } from '../../hooks/UseMain';
+import CancelTransactionModal from './components/CancelTransaction';
 
 const { Option } = Select;
 
@@ -23,6 +24,10 @@ function TransactionListTable() {
     setSelectedUser,
     isLoading,
     setMethod,
+    isModalVisible,
+    setIsModalVisible,
+    showCancelTransactionModal,
+    transactionId,
   } = useTransactionList();
 
   const { changeValue } = useMain();
@@ -62,7 +67,9 @@ function TransactionListTable() {
                     name="month"
                   >
                     <Select
-                      placeholder={data[changeValue].transactions_info.placeholder_1}
+                      placeholder={
+                        data[changeValue].transactions_info.placeholder_1
+                      }
                     >
                       <Option key="01" value="01">
                         {data[changeValue].transactions_info.january}
@@ -108,7 +115,9 @@ function TransactionListTable() {
                     name="year"
                   >
                     <Select
-                      placeholder={data[changeValue].transactions_info.placeholder_2}
+                      placeholder={
+                        data[changeValue].transactions_info.placeholder_2
+                      }
                     >
                       <Option key="2020" value="2020">
                         2020
@@ -153,7 +162,9 @@ function TransactionListTable() {
                 >
                   <Select
                     onChange={(value) => setMethod(value)}
-                    placeholder={data[changeValue].transactions_info.placeholder_3}
+                    placeholder={
+                      data[changeValue].transactions_info.placeholder_3
+                    }
                   >
                     <Option value="all" key="ALL">
                       ALL
@@ -196,6 +207,7 @@ function TransactionListTable() {
                     <TransactionData
                       transactionListData={transactionListData}
                       showUserInfoModal={showUserInfoModal}
+                      showCancelTransactionModal={showCancelTransactionModal}
                     />
                   </div>
                   <Space style={{ padding: '10px' }}>
@@ -223,6 +235,12 @@ function TransactionListTable() {
           setIsModalUserInfo={setIsModalUserInfo}
           selectedUser={selectedUser}
           setSelectedUser={setSelectedUser}
+        />
+
+        <CancelTransactionModal
+        transactionId={transactionId}
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
         />
       </div>
     </Main>

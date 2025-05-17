@@ -28,6 +28,8 @@ function UsersListTable() {
     userReset,
     fetchUserListData,
     fetchUserId,
+    fetchUserPremium,
+    botLanguage,
   } = useUserList();
 
   const { changeValue } = useMain();
@@ -113,6 +115,28 @@ function UsersListTable() {
                   >
                     Reset
                   </Button>
+                </div>
+
+                <div>
+                  <Select
+                    defaultValue="Select User Type"
+                    onChange={(value) => {
+                      fetchUserPremium(value);
+                    }}
+                  >
+                    <Select.Option value="true">Premium</Select.Option>
+                    <Select.Option value="false">Non Premium</Select.Option>
+                  </Select>
+                  <Select
+                    defaultValue="Select Language"
+                    style={{ marginLeft: '20px' }}
+                    onChange={(value) => {
+                      fetchUserPremium(value);
+                    }}
+                  >
+                    <Select.Option value="uz">Uzbek</Select.Option>
+                    <Select.Option value="ru">Russian</Select.Option>
+                  </Select>
                 </div>
               </div>
 

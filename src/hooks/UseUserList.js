@@ -105,6 +105,42 @@ const useUserList = () => {
     }
   };
 
+  const fetchUserPremium = async (value) => {
+    if (!value) return;
+    setIsLoading(true);
+    try {
+      const res = await Api.get(
+        `/users/list?limit=100&page=${next}&premium=${value}`
+      );
+      setUserListData(res.data.data);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Request failed with status code 404') {
+        setUserListData([]);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const botLanguage = async (value) => {
+    if (!value) return;
+    setIsLoading(true);
+    try {
+      const res = await Api.get(
+        `/users/list?limit=100&page=${next}&bot_lang=${value}`
+      );
+      setUserListData(res.data.data);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Request failed with status code 404') {
+        setUserListData([]);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const handleDelete = (id) => {
     setId(id);
     setDeleteModalVisible(true);
@@ -128,8 +164,6 @@ const useUserList = () => {
   React.useEffect(() => {
     fetchUserListData();
     fetchSourceData();
-    fetchUserPhoneNumberData();
-    fetchUserId()
   }, [next]);
 
   return {
@@ -155,7 +189,9 @@ const useUserList = () => {
     setDeleteModalVisible,
     userReset,
     fetchUserListData,
-    fetchUserId
+    fetchUserId,
+    fetchUserPremium,
+    botLanguage,
   };
 };
 
