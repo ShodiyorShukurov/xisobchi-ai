@@ -4,7 +4,7 @@ import React from 'react';
 const UserDelete = ({
   deleteModalVisible,
   setDeleteModalVisible,
-  userReset,
+  userDelete,
 }) => {
   return (
     <Modal
@@ -12,7 +12,7 @@ const UserDelete = ({
       open={deleteModalVisible}
       onCancel={() => setDeleteModalVisible(false)}
       footer={[
-        <Button key="submit" type="primary" danger onClick={userReset}>
+        <Button key="submit" type="primary" danger onClick={userDelete}>
           Ha
         </Button>,
         <Button key="back" onClick={() => setDeleteModalVisible(false)}>
@@ -20,7 +20,7 @@ const UserDelete = ({
         </Button>,
       ]}
     >
-      <p>O'chirmoqchimisiz</p>
+      <p>Ushbu userni o'chirmoqchimisiz?</p>
     </Modal>
   );
 };

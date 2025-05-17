@@ -12,8 +12,9 @@ const useUserList = () => {
   const [selectedUser, setSelectedUser] = React.useState(null);
   const [isModalUserInfo, setIsModalUserInfo] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
+  const [resetModalVisible, setResetModalVisible] = React.useState(false);
   const [id, setId] = React.useState(null);
+  const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
 
   const [form] = Form.useForm();
 
@@ -91,9 +92,7 @@ const useUserList = () => {
     if (!id) return;
     setIsLoading(true);
     try {
-      const res = await Api.get(
-        `/user/${id}`
-      );
+      const res = await Api.get(`/user/${id}`);
       setUserListData([res.data.data]);
     } catch (error) {
       console.error(error);
@@ -121,7 +120,7 @@ const useUserList = () => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const botLanguage = async (value) => {
     if (!value) return;
@@ -139,11 +138,11 @@ const useUserList = () => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  const handleDelete = (id) => {
+  const handleReset = (id) => {
     setId(id);
-    setDeleteModalVisible(true);
+    setResetModalVisible(true);
   };
 
   const userReset = async () => {
@@ -151,7 +150,27 @@ const useUserList = () => {
     try {
       const res = await Api.delete(`/user/reset/${id}`);
       if (res.status === 200) {
-        setDeleteModalVisible(false);
+        setResetModalVisible(false);
+        fetchUserListData();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = (id) => {
+    setId(id);
+    setDeleteModalVisible(true);
+  };
+
+  const userDelete = async () => {
+    setIsLoading(true);
+    try {
+      const res = await Api.delete(`/user/delete/${id}`);
+      if (res.status === 200) {
+        setResetModalVisible(false);
         fetchUserListData();
       }
     } catch (error) {
@@ -184,14 +203,18 @@ const useUserList = () => {
     setIsModalUserInfo,
     sourceData,
     isLoading,
-    handleDelete,
-    deleteModalVisible,
-    setDeleteModalVisible,
+    handleReset,
+    resetModalVisible,
+    setResetModalVisible,
     userReset,
     fetchUserListData,
     fetchUserId,
     fetchUserPremium,
     botLanguage,
+    handleDelete,
+    deleteModalVisible,
+    setDeleteModalVisible,
+    userDelete
   };
 };
 

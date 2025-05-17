@@ -6,6 +6,7 @@ import UserData from './data/UserData';
 import MoreInfoModal from './components/MoreInfoModal';
 import { data } from '../../mock/data';
 import { useMain } from '../../hooks/UseMain';
+import UserReset from './components/UserReset';
 import UserDelete from './components/UserDelete';
 
 function UsersListTable() {
@@ -22,14 +23,18 @@ function UsersListTable() {
     isModalUserInfo,
     setIsModalUserInfo,
     isLoading,
-    handleDelete,
-    deleteModalVisible,
-    setDeleteModalVisible,
+    handleReset,
+    resetModalVisible,
+    setResetModalVisible,
     userReset,
     fetchUserListData,
     fetchUserId,
     fetchUserPremium,
     botLanguage,
+    handleDelete,
+    deleteModalVisible,
+    setDeleteModalVisible,
+    userDelete,
   } = useUserList();
 
   const { changeValue } = useMain();
@@ -131,7 +136,7 @@ function UsersListTable() {
                     defaultValue="Select Language"
                     style={{ marginLeft: '20px' }}
                     onChange={(value) => {
-                      fetchUserPremium(value);
+                      botLanguage(value);
                     }}
                   >
                     <Select.Option value="uz">Uzbek</Select.Option>
@@ -149,6 +154,7 @@ function UsersListTable() {
                     openMessageModal={openMessageModal}
                     showTransactionModal={showTransactionModal}
                     showUserInfoModal={showUserInfoModal}
+                    handleReset={handleReset}
                     handleDelete={handleDelete}
                   />
                 )}
@@ -180,11 +186,13 @@ function UsersListTable() {
           setSelectedUser={setSelectedUser}
         />
 
-        <UserDelete
-          deleteModalVisible={deleteModalVisible}
+        <UserReset
+          resetModalVisible={resetModalVisible}
           userReset={userReset}
-          setDeleteModalVisible={setDeleteModalVisible}
+          setResetModalVisible={setResetModalVisible}
         />
+
+        <UserDelete userDelete={userDelete} deleteModalVisible={deleteModalVisible} setDeleteModalVisible={setDeleteModalVisible} />
       </div>
     </Main>
   );
