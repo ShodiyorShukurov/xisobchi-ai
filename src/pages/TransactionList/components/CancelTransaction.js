@@ -12,7 +12,7 @@ const CancelTransactionModal = ({
     form
       .validateFields()
       .then(async (values) => {
-        await Api.post(`/transactions/cancel-trans`, {
+        await Api.post(`/cancel-trans`, {
           reason: values.reason,
           success_trans_id: transactionId,
         });
