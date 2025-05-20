@@ -3,7 +3,11 @@ import { Button, Space, Table } from 'antd';
 import { data } from '../../../mock/data';
 import { useMain } from '../../../hooks/UseMain';
 
-const TransactionData = ({ transactionListData, showUserInfoModal, showCancelTransactionModal }) => {
+const TransactionData = ({
+  transactionListData,
+  showUserInfoModal,
+  showCancelTransactionModal,
+}) => {
   const { changeValue } = useMain();
   const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
   const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
@@ -17,10 +21,12 @@ const TransactionData = ({ transactionListData, showUserInfoModal, showCancelTra
           user_id: transaction.user_id,
           amount: transaction.amount,
           method: transaction.method,
+          count: transaction.count,
           paid_msg: transaction.paid_msg,
+          recurrent: transaction.recurrent,
           create_at: transaction.create_at.slice(0, 10),
           transactionId: transaction.id,
-          success_trans_id: transaction.success_trans_id
+          success_trans_id: transaction.success_trans_id,
         }))
       : [];
 
@@ -71,6 +77,7 @@ const TransactionData = ({ transactionListData, showUserInfoModal, showCancelTra
       align: 'center',
       render: (amount) => `${Number(amount)} ${data[changeValue].sum}`,
     },
+    { title: 'Count', dataIndex: 'count', key: 'count', align: 'center' },
     {
       title: data[changeValue].transactions_info.method,
       dataIndex: 'method',
@@ -85,6 +92,17 @@ const TransactionData = ({ transactionListData, showUserInfoModal, showCancelTra
       render: (paid_msg) => (
         <span style={{ color: paid_msg ? 'green' : 'red' }}>
           {paid_msg ? paid_msg : 'Not Paid'}
+        </span>
+      ),
+    },
+    {
+      title: 'Recurrent',
+      dataIndex: 'recurrent',
+      key: 'recurrent',
+      align: 'center',
+      render: (recurrent) => (
+        <span style={{ color: recurrent ? 'green' : 'red' }}>
+          {recurrent ? recurrent : 'Not Recurrent'}
         </span>
       ),
     },
@@ -127,7 +145,12 @@ const TransactionData = ({ transactionListData, showUserInfoModal, showCancelTra
             </svg>
           </Button>
           {record.method === 'ATMOS' && (
-            <Button type="link" onClick={() => showCancelTransactionModal(record.success_trans_id)}>
+            <Button
+              type="link"
+              onClick={() =>
+                showCancelTransactionModal(record.success_trans_id)
+              }
+            >
               <svg
                 width={20}
                 xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +179,7 @@ const TransactionData = ({ transactionListData, showUserInfoModal, showCancelTra
         dataSource={dataIndex}
         pagination={false}
         className="ant-border-space"
-        scroll={{ y: 600 }} // Jadvalga ichki scroll qo‘shish
+        scroll={{ y: 600 }}
       />
     </div>
   );

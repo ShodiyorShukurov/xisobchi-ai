@@ -24,9 +24,11 @@ const MoreInfoModal = ({
           user_id: transaction.user_id,
           paid_msg: transaction.paid_msg,
           amount: transaction.amount,
+          count: transaction.count,
           method: transaction.method,
           success_trans_id: transaction.success_trans_id,
           ofd_url: transaction.ofd_url,
+          recurrent: transaction.recurrent,
           create_at: transaction.create_at.slice(0, 10),
         }))
       : [];
@@ -59,19 +61,15 @@ const MoreInfoModal = ({
       align: 'center',
     },
     {
-      title: "Paid Message",
+      title: 'Paid Message',
       dataIndex: 'paid_msg',
       key: 'paid_msg',
       align: 'center',
       render: (paid_msg) =>
         paid_msg ? (
-          <span style={{ color: 'green' }}>
-            {paid_msg}
-          </span>
+          <span style={{ color: 'green' }}>{paid_msg}</span>
         ) : (
-          <span style={{ color: 'red' }}>
-              Not Paid
-          </span>
+          <span style={{ color: 'red' }}>Not Paid</span>
         ),
     },
     {
@@ -79,8 +77,13 @@ const MoreInfoModal = ({
       dataIndex: 'amount',
       key: 'amount',
       align: 'center',
-      render: (amount) =>
-        `${Number(amount)} ${data[changeValue].sum}`,
+      render: (amount) => `${Number(amount)} ${data[changeValue].sum}`,
+    },
+    {
+      title: 'Count',
+      dataIndex: 'count',
+      key: 'count',
+      align: 'center',
     },
     {
       title: data[changeValue].transaction_info.method,
@@ -118,6 +121,18 @@ const MoreInfoModal = ({
           <span style={{ color: 'red' }}>
             {data[changeValue].transaction_info.ofd_url_error}
           </span>
+        ),
+    },
+    {
+      title: 'Recurrent',
+      dataIndex: 'recurrent',
+      key: 'recurrent',
+      align: 'center',
+      render: (recurrent) =>
+        recurrent ? (
+          <span style={{ color: 'green' }}>{recurrent}</span>
+        ) : (
+          <span style={{ color: 'red' }}>Not Recurrent</span>
         ),
     },
     {

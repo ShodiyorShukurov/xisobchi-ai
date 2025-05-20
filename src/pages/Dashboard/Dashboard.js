@@ -7,6 +7,8 @@ import useDashboard from '../../hooks/UseDashboard';
 import EChartUser from '../../components/chart/EChartUser';
 import { useMain } from '../../hooks/UseMain';
 import { data } from '../../mock/data';
+import EChartUserDailyTransaction from '../../components/chart/EChartUserDailyTransaction';
+import EChartDailyUser from '../../components/chart/EChartDailyUser';
 
 const dollor = [
   <svg
@@ -105,7 +107,7 @@ function Home() {
       today: 'Bot Lang (UZ)',
       title:
         Array.isArray(userStatistics?.bot_lang) &&
-        userStatistics.bot_lang.length > 0
+        userStatistics.bot_lang?.length > 0
           ? userStatistics.bot_lang[0].user_count
           : 0,
       // persent: "+30%",
@@ -153,7 +155,7 @@ function Home() {
       today: 'Bot Lang (RU)',
       title:
         Array.isArray(userStatistics?.bot_lang) &&
-        userStatistics.bot_lang.length > 0
+        userStatistics.bot_lang?.length > 0
           ? userStatistics.bot_lang[1].user_count
           : 0,
       // persent: "+30%",
@@ -193,11 +195,11 @@ function Home() {
       ),
       bnb: 'bnb2',
     },
-     {
+    {
       today: 'Start',
       title:
         Array.isArray(userStatistics?.bot_lang) &&
-        userStatistics.bot_lang.length > 0
+        userStatistics.bot_lang?.length > 0
           ? userStatistics.bot_lang[2].user_count
           : 0,
       // persent: "+30%",
@@ -242,8 +244,12 @@ function Home() {
                             : 'icon-box'
                         } `}
                         style={{
-                          width: c.today === 'Bot Lang (UZ)' || c.today === 'Bot Lang (RU)' && '48px',
-                          height: c.today === 'Bot Lang (UZ)' || c.today === 'Bot Lang (RU)' && '48px',
+                          width:
+                            c.today === 'Bot Lang (UZ)' ||
+                            (c.today === 'Bot Lang (RU)' && '48px'),
+                          height:
+                            c.today === 'Bot Lang (UZ)' ||
+                            (c.today === 'Bot Lang (RU)' && '48px'),
                         }}
                       >
                         {c.icon}
@@ -273,6 +279,13 @@ function Home() {
             </Card>
           </Col>
         </Row>
+        <Card bordered={false} className="criclebox h-full mb-24">
+          <EChartUserDailyTransaction />
+        </Card>
+
+         <Card bordered={false} className="criclebox h-full">
+          <EChartDailyUser />
+        </Card>
       </div>
     </Main>
   );

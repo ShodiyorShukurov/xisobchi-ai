@@ -20,6 +20,7 @@ const ReportsData = ({ message, handleDeleteModal, showMoreInfoModal }) => {
           ) : (
             <span>File not found</span>
           ),
+          sent_count: message?.sent_count,
           message_id: message.id,
         }))
       : [];
@@ -97,7 +98,21 @@ const ReportsData = ({ message, handleDeleteModal, showMoreInfoModal }) => {
       key: 'file',
       align: 'center',
     },
-
+    {
+      title: 'Sent Count',
+      dataIndex: 'sent_count',
+      key: 'sent_count',
+      align: 'center',
+      render: (sent_count) => (
+        <span>
+          {sent_count ? (
+            <span style={{ color: 'green' }}>{sent_count}</span>
+          ) : (
+            <span style={{ color: 'red' }}>Not Sent</span>
+          )}
+        </span>
+      ),
+    },
     {
       title: data[changeValue].users_list.actions,
       key: 'actions',

@@ -13,7 +13,6 @@ const useDashboard = () => {
     try {
       const res = await Api.get('/user/statistics/data');
       setUserStatistics(res.data.data);
-      console.log(res.data.data);
     } catch (error) {
       console.log(error);
       if (error.message === 'Request failed with status code 404') {
@@ -103,6 +102,53 @@ const useDashboard = () => {
   };
   /*User Source end*/
 
+  /*Transaction Daily data start*/
+  const [dailyTransactionData, setDailyTransactionData] = React.useState([]);
+
+  const fetchDailyTransactionData = async () => {
+    setIsLoading(true);
+    try {
+      const res = await Api.get(`/transactions/list/daily?limit=31&page=1`);
+      setDailyTransactionData(res.data);
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'Request failed with status code 404') {
+        setDailyTransactionData([]);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /*Transaction Daily data end*/
+
+  /*User daily data start*/
+  const [userDailyTransactionData, setUserDailyTransactionData] =
+    React.useState([]);
+
+  const fetchMonthlyUsersData = async (
+    year = new Date().getFullYear(),
+    month = new Date().getMonth() + 1
+  ) => {
+    if (!year || !month) return;
+
+    setIsLoading(true);
+    try {
+      const res = await Api.get(
+        `/user/monthly/data?year=${year}&month=${month}`
+      );
+      setUserDailyTransactionData(res.data.data);
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'Request failed with status code 404') {
+        setUserDailyTransactionData([]);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  /*User daily data end*/
+
   React.useEffect(() => {
     /*User data*/
     getUserStatisticsData();
@@ -118,6 +164,12 @@ const useDashboard = () => {
 
     /*User Source Data*/
     getUserStatisticsSouce();
+
+    /*Transaction Daily data*/
+    fetchDailyTransactionData();
+
+    /*User daily data*/
+    fetchMonthlyUsersData();
   }, []);
 
   return {
@@ -127,6 +179,8 @@ const useDashboard = () => {
     userStatisticsSource,
     totalAmount,
     isLoading,
+    dailyTransactionData,
+    userDailyTransactionData
   };
 };
 
