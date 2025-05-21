@@ -13,11 +13,11 @@ function EChartUserDailyTransaction() {
   {
     name: data[changeValue]?.dashboard?.payed_users_statistics_month || 'To‘langan foydalanuvchilar',
     data: Array.isArray(dailyTransactionData?.data)
-      ? dailyTransactionData.data.map((item) =>
+      ? dailyTransactionData?.data?.sort((a, b) => new Date(a.date) - new Date(b.date)).map((item) =>
           isNaN(Number(item?.total_amount)) ? 0 : Number(item.total_amount)
         )
       : [],
-    color: '#7F56D9', // modern purple
+    color: '#7F56D9',
   },
 ];
 
@@ -44,17 +44,17 @@ const eChart = {
             {
               from: 0,
               to: 1000000,
-              color: '#00C9A7', // greenish for small amounts
+              color: '#00C9A7', 
             },
             {
               from: 1000001,
               to: 9999999,
-              color: '#7F56D9', // purple for medium
+              color: '#7F56D9', 
             },
             {
               from: 10000000,
               to: 99999999,
-              color: '#FF6B6B', // red for large
+              color: '#FF6B6B',
             },
           ],
         },
