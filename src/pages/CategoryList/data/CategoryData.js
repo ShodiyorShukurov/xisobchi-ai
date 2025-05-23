@@ -19,10 +19,15 @@ const CategoryData = ({
           name_en: category.name_en,
           primary: category.primary,
           from_ai: category.from_ai,
-          created_at: category?.create_at?.slice(0, 10).split('-').reverse().join('.'),
+          created_at: category?.create_at
+            ?.slice(0, 10)
+            .split('-')
+            .reverse()
+            .join('.'),
           emoji: category.emoji,
           category_id: category.id,
           category: category,
+          color: category.color,
         }))
       : [];
 
@@ -73,6 +78,15 @@ const CategoryData = ({
       ),
     },
     {
+      title: 'Color',
+      dataIndex: 'color',
+      key: 'color',
+      align: 'center',
+      render: (color) => (
+        <span>{<span style={{ color: color }}>{color}</span>}</span>
+      ),
+    },
+    {
       title: 'From Ai',
       dataIndex: 'from_ai',
       key: 'from_ai',
@@ -114,7 +128,10 @@ const CategoryData = ({
             </svg>
           </Button>
 
-          <Button type="link" onClick={() => handleDeleteModal(record.category_id)}>
+          <Button
+            type="link"
+            onClick={() => handleDeleteModal(record.category_id)}
+          >
             <svg
               width={16}
               xmlns="http://www.w3.org/2000/svg"

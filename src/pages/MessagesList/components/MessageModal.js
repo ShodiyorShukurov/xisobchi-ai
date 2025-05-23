@@ -29,8 +29,6 @@ const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
       values?.image[0]?.originFileObj ? values?.image[0]?.originFileObj : ''
     );
 
-    console.log('formData', ...formData);
-
     try {
       await Api.post('/message/send', formData);
       message.success('done');

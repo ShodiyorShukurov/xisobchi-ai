@@ -23,6 +23,7 @@ console.log(selectItem)
         name_en: selectItem.name_en || '',
         emoji: selectItem.emoji || '',
         primary: selectItem.primary || '',  
+        color: selectItem.color || '',
       });
     }
   }, [isModalVisible, selectItem, form]);
@@ -35,6 +36,7 @@ console.log(selectItem)
       name_en: values.name_en,
       emoji: values.emoji,
       primary: values.primary,
+      color: values.color,
     };
 
     try {
@@ -134,6 +136,25 @@ console.log(selectItem)
               { value: true, label: 'True' },
               { value: false, label: 'False' },
             ]}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="color"
+          label="Color"
+          rules={[
+            {
+              required: true,
+              message: "Please enter a color",
+            },
+          ]}
+        >
+          <Input
+            style={{ width: '100%' }}
+            placeholder="Enter color"
+            onChange={(e) => {
+              form.setFieldsValue({ color: e.target.value });
+            }}
           />
         </Form.Item>
 
