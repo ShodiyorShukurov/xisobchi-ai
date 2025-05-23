@@ -26,8 +26,10 @@ const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
     formData.append('bot_lang', values.bot_lang);
     formData.append(
       'file',
-      values?.image[0]?.originFileObj ? values?.image[0]?.originFileObj : null
+      values?.image[0]?.originFileObj ? values?.image[0]?.originFileObj : ''
     );
+
+    console.log('formData', ...formData);
 
     try {
       await Api.post('/message/send', formData);
