@@ -24,10 +24,15 @@ const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
     formData.append('text', values.text);
     formData.append('premium', values.premium);
     formData.append('bot_lang', values.bot_lang);
-    formData.append(
-      'file',
-      values?.image[0]?.originFileObj ? values?.image[0]?.originFileObj : ''
-    );
+
+    if (!values.image || values.image.length === 0) {
+      formData.append('file', '');
+    } else {
+      formData.append(
+        'file',
+        values?.image[0]?.originFileObj ? values?.image[0]?.originFileObj : ''
+      );
+    }
 
     try {
       await Api.post('/message/send', formData);
@@ -109,9 +114,16 @@ const MessageModal = ({ isModalVisible, handleCancel, getMessage }) => {
           />
         </Form.Item>
 
-        <Form.Item name="premium" label="Premium">
+        <Form.Item name="premium" label="Premium" 
+          rules={[
+            {
+              required: true,
+              message: "Please select if the message is premium",
+            },
+          ]}>
           <Select
             placeholder="Select premium"
+            
             style={{ width: '100%' }}
             options={[
               { value: true, label: 'True' },
