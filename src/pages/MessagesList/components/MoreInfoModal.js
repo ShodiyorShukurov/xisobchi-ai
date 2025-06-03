@@ -59,7 +59,7 @@ const MoreInfoModal = ({ moreInfoModal, handleMoreInfoCancel, moreInfoId }) => {
 
   return (
     <Modal
-      title="Debt Info"
+      title="Message Info"
       open={moreInfoModal}
       onCancel={() => {
         handleMoreInfoCancel();

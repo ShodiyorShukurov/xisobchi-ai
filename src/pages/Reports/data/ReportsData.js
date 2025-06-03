@@ -19,6 +19,7 @@ const ReportsData = ({ showReprortInfoModal, reportsListData }) => {
           currency: report?.currency,
           income: report?.income,
           comment: report?.comment,
+          debt: report?.debt,
           date: report?.date,
           reports: report?.id,
         }))
@@ -112,6 +113,23 @@ const ReportsData = ({ showReprortInfoModal, reportsListData }) => {
         </span>
       ),
     },
+
+    {
+      title: 'Debt',
+      dataIndex: 'debt',
+      key: 'debt',
+      align: 'center',
+      render: (debt) => (
+        <span>
+          {debt ? (
+            <span style={{ color: 'green' }}>True</span>
+          ) : (
+            <span style={{ color: 'red' }}>False</span>
+          )}
+        </span>
+      ),
+    },
+
     {
       title: 'Date',
       dataIndex: 'date',
