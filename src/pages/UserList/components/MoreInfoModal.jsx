@@ -400,7 +400,13 @@ const MoreInfoModal = ({
       dataIndex: 'amount',
       key: 'amount',
       align: 'center',
-      render: (amount) => `${Number(amount).toLocaleString()} so'm`,
+      render: (amount) => `${Number(amount).toLocaleString()}`,
+    },
+        {
+      title: 'Valyuta',
+      dataIndex: 'currency',
+      key: 'currency',
+      align: 'center',
     },
     {
       title: 'Sana',
@@ -419,12 +425,6 @@ const MoreInfoModal = ({
       title: 'Kategoriya',
       dataIndex: 'category_name',
       key: 'category_name',
-      align: 'center',
-    },
-    {
-      title: 'Valyuta',
-      dataIndex: 'currency',
-      key: 'currency',
       align: 'center',
     },
     {
